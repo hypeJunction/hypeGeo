@@ -14,7 +14,7 @@ Various tools intended to simplify location-aware development
 ## MySQL Spatial Extentions
 
 * The plugin optimizes the storage of geographical coordinates by adding a
-geometry-enabled ```prefix_entity_geometry``` table, with a unique entity_guid key.
+geometry-enabled ```prefix_entity_geometry``` table, with a unique ```entity_guid``` key.
 Whenever ```location``` metadata is updated, the metadata value is geocoded, and
 corresponding coordinates are stored in the geometry-enabled table. This allows
 to reduce the overhead, necessary to sort entities by distance to a given
@@ -68,13 +68,8 @@ The plugin adds several views, which make it easier to standardize location-awar
 ### Form Views
 
 * ```forms/geo/postal_address``` - standard postal address form (submits an array with a configurable name)
-The action will receive an array with the following keys:
-```street_address```,
-```extended_address```,
-```locality```,
-```region```,
-```postal_code```,
-```country_code```
+The action will receive an array with the following keys: ```street_address```,
+```extended_address```, ```locality```, ```region```, ```postal_code```, ```country_code```
 
 
 ### Input Views
