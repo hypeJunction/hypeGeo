@@ -1,0 +1,20 @@
+.elgg-icon.elgg-icon-geo-location {
+  background: none;
+  display: inline-block;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.elgg-icon.elgg-icon-geo-location:before {
+  content: "\f041";
+  color: #4690d6;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.geo-search-item > .elgg-body {
+  margin-left: 30px;
+}

@@ -1,0 +1,19 @@
+{
+	"name": "Elgg/Geotools",
+	"description": "Tools for building location-aware Elgg plugins",
+	"homepage": "http://hypejunction.com",
+	"authors": [
+		{
+			"name": "Ismayil Khayredinov",
+			"email": "ismayil.khayredinov@gmail.com"
+		}
+	],
+	"config": {
+		"vendor-dir": "vendors"
+	},
+	"require": {
+		"guzzle/guzzle": "~3.7",
+		"willdurand/geocoder": "@stable",
+		"treffynnon/navigator": "1.0.0"
+	}
+}
