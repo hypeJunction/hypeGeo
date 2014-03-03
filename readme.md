@@ -84,6 +84,86 @@ elgg_tokeninput input is required for autocomplete https://github.com/hypeJuncti
 * ```output/geo/location```
 * ```output/geo/country```
 
+## Examples
+
+The following example will display a list of users within a 200km radius to the
+current user, and order them by proximity.
+Please note that this example assumes that you have properly geocoded details
+of the currently logged in user
+
+```php
+
+$current_user = elgg_get_logged_in_user_entity();
+$lat = $current_user->getLatitude();
+$long = $current_user->getLongitude();
+
+$radius = 200 * 100; // 200km in meters
+
+$params = array(
+	'types' => 'user',
+	'full_view' => false,
+	// other getter and lister options
+);
+
+$params = \hypeJunction\Geo\add_distance_constraint_clauses($params, $lat, $long, 200000);
+$params = \hypeJunction\Geo\add_order_by_proximity_clauses($params, $lat, $long);
+
+echo elgg_list_entities($params);
+
+```
+
+The following example will display a list of blogs and bookmarks within a
+500 meter radius to an address in a default order (time_created).
+
+```php
+
+$location = "Potsdamerstr. 56, Berlin";
+
+$coords = elgg_geocode_location($location);
+$lat = $coords['latitude'];
+$long = $coords['longitude'];
+
+$params = array(
+	'types' => 'object',
+	'subtypes' => array('blog','bookmarks'),
+	'full_view' => false,
+	// other getter and lister options
+);
+
+$params = \hypeJunction\Geo\add_distance_constraint_clauses($params, $lat, $long, 500);
+
+echo elgg_list_entities($params);
+```
+
+The following example will display a list of 20 featured groups closest to another entity:
+
+```php
+
+$guid = get_input('guid');
+$entity = get_entity($guid);
+
+if (elgg_instanceof($entity)) {
+	$lat = $entity->getLatitude();
+	$long = $entity->getLongitude();
+}
+
+if ($lat && $long) {
+	$options = array(
+		'types' => 'group',
+		'metadata_name_value_pairs' => array(
+			'name' => 'featured_group', 'value' => 'yes'
+		),
+		'limit' => 20
+	);
+
+	$entities = \hypeJunction\Geo\get_entities_by_proximity($options, $lat, $long, 'elgg_get_entities_from_metadata');
+	echo elgg_view_entity_list($entities, array(
+		'pagination' => false,
+		'full_view' => false
+	));
+}
+
+```
 
 ## Screenshots
 
