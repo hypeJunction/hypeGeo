@@ -105,7 +105,7 @@ $params = array(
 	// other getter and lister options
 );
 
-$params = \hypeJunction\Geo\add_distance_constraint_clauses($params, $lat, $long, 200000);
+$params = \hypeJunction\Geo\add_distance_constraint_clauses($params, $lat, $long, $radius);
 $params = \hypeJunction\Geo\add_order_by_proximity_clauses($params, $lat, $long);
 
 echo elgg_list_entities($params);
