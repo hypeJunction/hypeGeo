@@ -64,13 +64,21 @@ function add_order_by_proximity_clauses($options = array(), $lat = 0, $long = 0)
 
 /**
  * Add a constraint for limiting the proximity to a certain distance in metres
- * 
- * @param array $options Current etter options
- * @param float $radius Radius in metres. Defaults to 50km
- * @param string $proximity	An alias to assign to the proximity calculation
+ *
+ * Examples of $radius and $ratio combinations:
+ * 500 meters: $radius = 500, $ratio = 1
+ * 20 kilometers: $radius = 20, $ratio = 0.001
+ * 30 miles: $radius = 30, $ratio = 0.000621371
+ *
+ * @param array $options	An array of getter options
+ * @param float $lat		Latitude of the center
+ * @param float $long		Longitude of the center
+ * @param int $radius		Distance from the center
+ * @param float $ratio		Ratio used to convert meters to the unit of the radius
+ *
  * @return array
  */
-function add_distance_constraint_clauses($options = array(), $lat = 0, $long = 0, $radius = 50000) {
+function add_distance_constraint_clauses($options = array(), $lat = 0, $long = 0, $radius = 50000, $ratio = 1) {
 
 	if (!is_array($options)) {
 		$options = array();
@@ -78,12 +86,13 @@ function add_distance_constraint_clauses($options = array(), $lat = 0, $long = 0
 
 	$lat = sanitize_string((float) $lat);
 	$long = sanitize_string((float) $long);
+	$radius = sanitize_string((int) $radius);
+	$ratio = sanitize_string((float) $ratio);
 
 	$dbprefix = elgg_get_config('dbprefix');
 
-	$ratio = 1.609344; // convert to km
-	
-	$options['wheres'][] = "((GLength(LineStringFromWKB(LineString(eg.geometry,GeomFromText('POINT({$lat} {$long})')))))*60*1.1515*{$ratio}*1000 <= {$radius})";
+	// 1825 is the number of meters in a nautical mile
+	$options['wheres'][] = "((GLength(LineStringFromWKB(LineString(eg.geometry,GeomFromText('POINT({$lat} {$long})')))))*60*1825*{$ratio} <= {$radius})";
 	$options['joins'][] = "JOIN {$dbprefix}entity_geometry eg ON e.guid = eg.entity_guid";
 	return $options;
 }
