@@ -97,7 +97,7 @@ $current_user = elgg_get_logged_in_user_entity();
 $lat = $current_user->getLatitude();
 $long = $current_user->getLongitude();
 
-$radius = 200 * 100; // 200km in meters
+$radius = 200 * 1000; // 200km in meters
 
 $params = array(
 	'types' => 'user',
