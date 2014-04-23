@@ -1,15 +1,26 @@
 {
-	"name": "Elgg/Geotools",
-	"description": "Tools for building location-aware Elgg plugins",
+	"name": "hypejunction/hypegeo",
+	"type": "elgg-plugin",
+	"repository": "hypeJunction/hypeGeo",
+	"description": "Tools for building geo-aware plugins for Elgg",
 	"homepage": "http://hypejunction.com",
+	"minimum-stability": "stable",
+	"keywords": [
+		"elgg", "plugin", "geography", "geocoding"
+	],
+	"license": "GPL-2.0",
 	"authors": [
 		{
 			"name": "Ismayil Khayredinov",
 			"email": "ismayil.khayredinov@gmail.com"
 		}
 	],
+	"extra": {
+		"installer-name": "hypeGeo"
+	},
 	"config": {
-		"vendor-dir": "vendors"
+		"vendor-dir": "vendors",
+		"preferred-install": "dist"
 	},
 	"require": {
 		"guzzle/guzzle": "~3.7",
@@ -17,3 +28,4 @@
 		"treffynnon/navigator": "1.0.0"
 	}
 }
+
