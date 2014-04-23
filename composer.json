@@ -23,6 +23,8 @@
 		"preferred-install": "dist"
 	},
 	"require": {
+		"php": ">=5.3.3",
+		"composer/installers": ">=1.0.8",
 		"guzzle/guzzle": "~3.7",
 		"willdurand/geocoder": "@stable",
 		"treffynnon/navigator": "1.0.0"
