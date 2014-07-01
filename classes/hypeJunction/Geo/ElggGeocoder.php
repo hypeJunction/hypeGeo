@@ -171,7 +171,11 @@ class ElggGeocoder {
 		$apiKey = elgg_get_plugin_setting("$provider:api_key", PLUGIN_ID);
 		$locale = elgg_get_plugin_setting("$provider:locale", PLUGIN_ID);
 		$region = elgg_get_plugin_setting("$provider:region", PLUGIN_ID);
-		$useSsl = elgg_get_plugin_setting("$provider:ssl", PLUGIN_ID);
+		if (!$apiKey) {
+			$useSsl = elgg_get_plugin_setting("$provider:ssl", PLUGIN_ID);
+		} else {
+			$useSsl = true;
+		}
 		return new GoogleMapsProvider(
 				$adapter, $locale, $region, $useSsl, $apiKey
 		);
