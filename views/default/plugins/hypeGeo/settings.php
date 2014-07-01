@@ -24,6 +24,15 @@ echo elgg_view('input/dropdown', array(
 echo '</div>';
 
 echo '<div>';
+echo '<label>' . elgg_echo('geo:settings:api_key') . '</label>';
+$opt = "$provider:api_key";
+echo elgg_view('input/text', array(
+	'name' => "params[$opt]",
+	'value' => $entity->$opt,
+));
+echo '</div>';
+
+echo '<div>';
 echo '<label>' . elgg_echo('geo:settings:locale') . '</label>';
 $opt = "$provider:locale";
 echo elgg_view('input/text', array(

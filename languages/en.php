@@ -8,6 +8,7 @@ $en = array(
 	 */
 	'geo:providers:none' => 'Please set up geocoding providers in hypeGeo plugin settings',
 	'geo:settings:enable' => 'Enable',
+	'geo:settings:api_key' => 'API Key',
 	'geo:settings:locale' => 'Locale (optional)',
 	'geo:settings:region' => 'Region (optional)',
 	'geo:settings:ssl' => 'Use SSL',

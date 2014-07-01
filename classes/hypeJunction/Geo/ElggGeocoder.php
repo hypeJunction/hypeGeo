@@ -5,7 +5,7 @@ namespace hypeJunction\Geo;
 use Exception;
 use Geocoder\Formatter\Formatter;
 use Geocoder\Geocoder;
-use Geocoder\HttpAdapter\GuzzleHttpAdapter;
+use Geocoder\HttpAdapter\CurlHttpAdapter;
 use Geocoder\Provider\GoogleMapsBusinessProvider;
 use Geocoder\Provider\GoogleMapsProvider;
 use Geocoder\Provider\NominatimProvider;
@@ -23,7 +23,7 @@ class ElggGeocoder {
 	function __construct() {
 
 		if (!isset(self::$adapter)) {
-			self::$adapter = new GuzzleHttpAdapter();
+			self::$adapter = new CurlHttpAdapter();
 		}
 
 		if (!isset(self::$providers)) {
@@ -168,11 +168,12 @@ class ElggGeocoder {
 		}
 
 		$adapter = self::$adapter;
+		$apiKey = elgg_get_plugin_setting("$provider:api_key", PLUGIN_ID);
 		$locale = elgg_get_plugin_setting("$provider:locale", PLUGIN_ID);
 		$region = elgg_get_plugin_setting("$provider:region", PLUGIN_ID);
 		$useSsl = elgg_get_plugin_setting("$provider:ssl", PLUGIN_ID);
 		return new GoogleMapsProvider(
-				$adapter, $locale, $region, $useSsl
+				$adapter, $locale, $region, $useSsl, $apiKey
 		);
 	}
 
