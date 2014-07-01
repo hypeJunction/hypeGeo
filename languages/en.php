@@ -6,6 +6,7 @@ $en = array(
 	/**
 	 * PLUGIN SETTINGS
 	 */
+	'geo:settings:proximity_search' => 'Enable proximity search in Elgg search results',
 	'geo:providers:none' => 'Please set up geocoding providers in hypeGeo plugin settings',
 	'geo:settings:enable' => 'Enable',
 	'geo:settings:api_key' => 'API Key',

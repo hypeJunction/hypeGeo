@@ -5,6 +5,22 @@ namespace hypeJunction\Geo;
 $entity = elgg_extract('entity', $vars);
 
 /**
+ * Elgg Search
+ */
+echo '<div>';
+echo '<label>' . elgg_echo('geo:settings:proximity_search') . '</label>';
+echo elgg_view('input/dropdown', array(
+	'name' => "params[proximity_search]",
+	'value' => $entity->proximity_search,
+	'options_values' => array(
+		0 => elgg_echo('option:no'),
+		1 => elgg_echo('option:yes'),
+	)
+));
+echo '</div>';
+
+
+/**
  * GOOGLE MAPS PROVIDER
  */
 $provider = 'GoogleMapsProvider';

@@ -61,7 +61,10 @@ function geocode_location_metadata($event, $type, $metadata) {
  * @return array
  */
 function search_custom_types($hook, $type, $return, $params) {
-	$return[] = 'proximity';
+
+	if (elgg_get_plugin_setting('proximity_search', PLUGIN_ID)) {
+		$return[] = 'proximity';
+	}
 	return $return;
 }
 
