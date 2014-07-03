@@ -6,6 +6,7 @@ use Exception;
 use Geocoder\Formatter\Formatter;
 use Geocoder\Geocoder;
 use Geocoder\HttpAdapter\CurlHttpAdapter;
+use Geocoder\Provider\ChainProvider;
 use Geocoder\Provider\GoogleMapsBusinessProvider;
 use Geocoder\Provider\GoogleMapsProvider;
 use Geocoder\Provider\NominatimProvider;
@@ -39,7 +40,8 @@ class ElggGeocoder {
 			elgg_add_admin_notice('geo:providers', elgg_echo('geo:providers:none'));
 		} else if (!isset(self::$geocoder)) {
 			$geocoder = new Geocoder();
-			$geocoder->registerProviders(self::$providers);
+			$chain = new ChainProvider(self::$providers);
+			$geocoder->registerProvider($chain);
 			self::$geocoder = $geocoder;
 		}
 	}
