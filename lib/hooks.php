@@ -35,7 +35,7 @@ function geocode_location_metadata($event, $type, $metadata) {
 
 		case 'create' :
 		case 'update' :
-			$coordinates = elgg_geocode_location($metadata->value);
+			$coordinates = elgg_trigger_plugin_hook('geocode', 'location', array('location' => $metadata->value), false);
 			if ($coordinates) {
 				set_entity_coordinates($metadata->entity_guid, $coordinates['lat'], $coordinates['long']);
 			} else {
@@ -71,7 +71,7 @@ function search_custom_types($hook, $type, $return, $params) {
 function search_by_proximity_hook($hook, $type, $return, $params) {
 
 	$query = $params['query'];
-	$coords = elgg_geocode_location($query);
+	$coords = elgg_trigger_plugin_hook('geocode', 'location', array('location' => $query), false);
 	if (!$coords) {
 		return $return;
 	}

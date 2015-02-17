@@ -50,7 +50,7 @@ class ElggGeocoder {
 	 * Geocode an address string
 	 *
 	 * @param string $address Address or location
-	 * @param boolean $filter Filter the result for elgg_geocode_location() or output all data
+	 * @param boolean $filter Filter the result for 'geocode' hook or output all data
 	 * @return mixed
 	 */
 	public static function geocodeAddress($address = '', $filter = true) {

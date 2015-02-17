@@ -243,7 +243,7 @@ function set_geopositioning($location = '', $latitude = 0, $longitude = 0) {
 	$long = (float) $longitude;
 
 	if (!$lat && !$long) {
-		$latlong = elgg_geocode_location($location);
+		$latlong = elgg_trigger_plugin_hook('geocode', 'location', array('location' => $location), false);
 		if ($latlong) {
 			$latitude = elgg_extract('lat', $latlong);
 			$longitude = elgg_extract('long', $latlong);
