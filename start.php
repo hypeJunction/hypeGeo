@@ -12,8 +12,10 @@ namespace hypeJunction\Geo;
 
 const PLUGIN_ID = 'hypeGeo';
 const SEARCH_RADIUS = 1000000;
-// Autoload dependencies
-require __DIR__ . '/vendors/autoload.php';
+if (file_exists(__DIR__ . '/vendors/autoload.php')) {
+    // Autoload dependencies
+    require __DIR__ . '/vendors/autoload.php';
+}
 define('HYPEGEO_METRIC_SYSTEM', 'SI');
 require_once __DIR__ . '/lib/functions.php';
 require_once __DIR__ . '/lib/hooks.php';
