@@ -14,7 +14,7 @@
 
 	<requires>
         <type>elgg_release</type>
-		<version>1.8</version>
+		<version>3.0</version>
     </requires>
 
 </plugin_manifest>
