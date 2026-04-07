@@ -37,10 +37,10 @@ function add_order_by_proximity_clauses($options = array(), $lat = 0, $long = 0)
 	$lat = (float) $lat;
 	$long = (float) $long;
 
-	$dbprefix = elgg_get_config('dbprefix');
+	$prefix = elgg()->db->prefix;
 
 	$options['selects'][] = "(GLength(LineStringFromWKB(LineString(eg.geometry,GeomFromText('POINT({$lat} {$long})'))))) as proximity";
-	$options['joins'][] = "JOIN {$dbprefix}entity_geometry eg ON e.guid = eg.entity_guid";
+	$options['joins'][] = "JOIN {$prefix}entity_geometry eg ON e.guid = eg.entity_guid";
 	$options['order_by'] = "proximity ASC, e.time_updated DESC";
 
 	return $options;
@@ -57,10 +57,10 @@ function add_distance_constraint_clauses($options = array(), $lat = 0, $long = 0
 	$radius = (int) $radius;
 	$ratio = (float) $ratio;
 
-	$dbprefix = elgg_get_config('dbprefix');
+	$prefix = elgg()->db->prefix;
 
 	$options['wheres'][] = "((GLength(LineStringFromWKB(LineString(eg.geometry,GeomFromText('POINT({$lat} {$long})')))))*60*1825*{$ratio} <= {$radius})";
-	$options['joins'][] = "JOIN {$dbprefix}entity_geometry eg ON e.guid = eg.entity_guid";
+	$options['joins'][] = "JOIN {$prefix}entity_geometry eg ON e.guid = eg.entity_guid";
 	return $options;
 }
 
@@ -88,11 +88,12 @@ function set_entity_coordinates($entity_guid = 0, $lat = 0, $long = 0) {
 
 	$entity->setLatLong($lat, $long);
 
-	$dbprefix = elgg_get_config('dbprefix');
-	$query = "INSERT INTO {$dbprefix}entity_geometry (entity_guid, geometry)
+	$db = elgg()->db;
+	$prefix = $db->prefix;
+	$query = "INSERT INTO {$prefix}entity_geometry (entity_guid, geometry)
 							VALUES ({$entity->guid}, GeomFromText('POINT({$lat} {$long})'))
 							ON DUPLICATE KEY UPDATE geometry=GeomFromText('POINT({$lat} {$long})')";
-	return insert_data($query);
+	return $db->insertData($query);
 }
 
 function unset_entity_coordinates($entity_guid = 0, $lat = 0, $long = 0) {
@@ -109,9 +110,10 @@ function unset_entity_coordinates($entity_guid = 0, $lat = 0, $long = 0) {
 		'limit' => 0
 	));
 
-	$dbprefix = elgg_get_config('dbprefix');
-	$query = "DELETE FROM {$dbprefix}entity_geometry WHERE entity_guid = $entity->guid";
-	return delete_data($query);
+	$db = elgg()->db;
+	$prefix = $db->prefix;
+	$query = "DELETE FROM {$prefix}entity_geometry WHERE entity_guid = {$entity->guid}";
+	return $db->deleteData($query);
 }
 
 function search_locations($term, $options = array()) {
