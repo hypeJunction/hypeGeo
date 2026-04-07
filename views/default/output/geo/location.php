@@ -1,17 +1,11 @@
 <?php
 
-/**
- * Outputs a location
- *
- * @uses $vars['value'] Location string to output
- * @uses $vars['entity'] Optionally pass an entity to set value to entity location
- */
 namespace hypeJunction\Geo;
 
 $value = elgg_extract('value', $vars, null);
 $entity = elgg_extract('entity', $vars);
 
-if (!$value && elgg_instanceof($entity)) {
+if (!$value && $entity instanceof \ElggEntity) {
 	$value = $entity->getLocation();
 }
 

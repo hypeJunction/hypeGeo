@@ -2,29 +2,12 @@
 
 namespace hypeJunction\Geo;
 
-/**
- * Check if the location has already been geocoded
- *
- * @param str $hook 'geocode'
- * @param str $type 'location'
- * @param false|array $return false or array($lat,$long)
- * @param mixed $params
- *
- * @return array|false Array of lat,long or false if geocoding fails
- */
 function geocode_location($hook, $type, $return, $params) {
 
 	$location = elgg_extract('location', $params, false);
 	return ElggGeocoder::geocodeAddress($location);
 }
 
-/**
- * Geocode entity location and set latitude and longitude when 'location' metadata is created/updated
- *
- * @param type $event
- * @param type $type
- * @param type $metadata
- */
 function geocode_location_metadata($event, $type, $metadata) {
 
 	if ($metadata->name != 'location') {
@@ -51,15 +34,6 @@ function geocode_location_metadata($event, $type, $metadata) {
 	return true;
 }
 
-/**
- * Add search by proximity section
- * 
- * @param string $hook		Equals 'search_types'
- * @param string $type		Equals 'get_types'
- * @param array $return		A list of search types
- * @param array $params		Additional params
- * @return array
- */
 function search_custom_types($hook, $type, $return, $params) {
 
 	if (elgg_get_plugin_setting('proximity_search', PLUGIN_ID)) {
@@ -79,7 +53,11 @@ function search_by_proximity_hook($hook, $type, $return, $params) {
 	$registered_entities = elgg_get_config('registered_entities');
 	$options = array(
 		'types' => array('object', 'user', 'group'),
-		'subtypes' => array_merge($registered_entities['object'], $registered_entities['user'], $registered_entities['group']),
+		'subtypes' => array_merge(
+			(array) elgg_extract('object', $registered_entities, []),
+			(array) elgg_extract('user', $registered_entities, []),
+			(array) elgg_extract('group', $registered_entities, [])
+		),
 		'limit' => get_input('limit', 20),
 		'offset' => get_input('proximity_offset', 0),
 		'offset_key' => 'proximity_offset',
@@ -95,13 +73,13 @@ function search_by_proximity_hook($hook, $type, $return, $params) {
 		$entities = elgg_get_entities($options);
 	}
 
-	if ($entities) {
+	if (!empty($entities)) {
 		foreach ($entities as $entity) {
 
-			$name = search_get_highlighted_relevant_substrings(isset($entity->name) ? $entity->name : $entity->title, $query);
+			$name = isset($entity->name) ? $entity->name : $entity->title;
 			$entity->setVolatileData('search_matched_title', $name);
 
-			$location = search_get_highlighted_relevant_substrings($entity->getLocation(), $query);
+			$location = $entity->getLocation();
 			$entity->setVolatileData('search_matched_location', $location);
 
 			$distance = get_distance($entity->getLatitude(), $entity->getLongitude(), $coords['lat'], $coords['long']); // distance in metres
@@ -113,7 +91,7 @@ function search_by_proximity_hook($hook, $type, $return, $params) {
 	}
 
 	return array(
-		'entities' => $entities,
+		'entities' => $entities ?? [],
 		'count' => $count,
 	);
 }
