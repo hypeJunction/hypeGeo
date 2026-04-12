@@ -9,3 +9,4 @@ config.rb
 /.sass-cache/
 
 vendors/
+tests/.phpunit.result.cache
