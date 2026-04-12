@@ -1,32 +1,37 @@
 {
 	"name": "hypejunction/hypegeo",
 	"type": "elgg-plugin",
-	"repository": "hypeJunction/hypeGeo",
-	"description": "Tools for building geo-aware plugins for Elgg",
+	"description": "Tools to simplify location-aware development in Elgg",
 	"homepage": "http://hypejunction.com",
-	"minimum-stability": "stable",
 	"keywords": [
-		"elgg", "plugin", "geography", "geocoding"
+		"elgg",
+		"plugin",
+		"geography",
+		"geocoding",
+		"location"
 	],
-	"license": "GPL-2.0",
+	"license": "GPL-2.0-or-later",
 	"authors": [
 		{
 			"name": "Ismayil Khayredinov",
 			"email": "ismayil.khayredinov@gmail.com"
 		}
 	],
-	"extra": {
-		"installer-name": "hypeGeo"
+	"minimum-stability": "stable",
+	"require": {
+		"php": ">=7.4",
+		"composer/installers": "^2.0",
+		"willdurand/geocoder": "^4.0"
 	},
 	"config": {
-		"vendor-dir": "vendors",
+		"allow-plugins": {
+			"composer/installers": true
+		},
 		"preferred-install": "dist"
 	},
-	"require": {
-		"php": ">=5.3.3",
-		"composer/installers": ">=1.0.8",
-		"willdurand/geocoder": "@stable",
-		"treffynnon/navigator": "1.0.0"
+	"extra": {
+		"elgg-plugin": {
+			"id": "hypegeo"
+		}
 	}
 }
-

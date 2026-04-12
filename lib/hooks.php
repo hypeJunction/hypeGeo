@@ -79,7 +79,7 @@ function search_by_proximity_hook($hook, $type, $return, $params) {
 			$name = isset($entity->name) ? $entity->name : $entity->title;
 			$entity->setVolatileData('search_matched_title', $name);
 
-			$location = $entity->getLocation();
+			$location = $entity->location;
 			$entity->setVolatileData('search_matched_location', $location);
 
 			$distance = get_distance($entity->getLatitude(), $entity->getLongitude(), $coords['lat'], $coords['long']); // distance in metres

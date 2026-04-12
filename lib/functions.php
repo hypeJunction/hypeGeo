@@ -145,7 +145,7 @@ function get_geopositioning() {
 	} else if (elgg_is_logged_in()) {
 		$user = elgg_get_logged_in_user_entity();
 		return array(
-			'location' => $user->getLocation(),
+			'location' => $user->location,
 			'latitude' => $user->getLatitude(),
 			'longitude' => $user->getLongitude()
 		);

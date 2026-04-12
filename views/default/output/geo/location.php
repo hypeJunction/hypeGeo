@@ -6,7 +6,7 @@ $value = elgg_extract('value', $vars, null);
 $entity = elgg_extract('entity', $vars);
 
 if (!$value && $entity instanceof \ElggEntity) {
-	$value = $entity->getLocation();
+	$value = $entity->location;
 }
 
 if (!$value) {
