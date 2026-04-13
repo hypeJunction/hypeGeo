@@ -10,3 +10,4 @@ config.rb
 
 vendors/
 tests/.phpunit.result.cache
+docker/.env
