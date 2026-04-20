@@ -18,12 +18,12 @@ class PluginActivationTest extends IntegrationTestCase {
     }
 
     public function testPluginRegistered(): void {
-        $plugin = elgg_get_plugin_from_id('hypeGeo');
+        $plugin = elgg_get_plugin_from_id('hypegeo');
         if (!$plugin) {
-            $this->markTestSkipped('hypeGeo plugin entity not in test DB (c_i_elgg_)');
+            $this->markTestSkipped('hypegeo plugin entity not in test DB (c_i_elgg_)');
             return;
         }
-        $this->assertEquals('hypeGeo', $plugin->getID());
+        $this->assertEquals('hypegeo', $plugin->getID());
     }
 
     public function testActivateSqlFileExists(): void {
@@ -36,6 +36,6 @@ class PluginActivationTest extends IntegrationTestCase {
     public function testRequiredConstantsDefined(): void {
         $this->assertTrue(defined('hypeJunction\\Geo\\PLUGIN_ID'));
         $this->assertTrue(defined('hypeJunction\\Geo\\SEARCH_RADIUS'));
-        $this->assertEquals('hypeGeo', PLUGIN_ID);
+        $this->assertEquals('hypegeo', PLUGIN_ID);
     }
 }

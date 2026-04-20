@@ -24,6 +24,14 @@ class Bootstrap extends DefaultPluginBootstrap
 			require_once $root . 'vendors/autoload.php';
 		}
 
+		if (!defined('hypeJunction\Geo\PLUGIN_ID')) {
+			define('hypeJunction\Geo\PLUGIN_ID', 'hypegeo');
+		}
+
+		if (!defined('hypeJunction\Geo\SEARCH_RADIUS')) {
+			define('hypeJunction\Geo\SEARCH_RADIUS', 1000000);
+		}
+
 		if (!defined('HYPEGEO_METRIC_SYSTEM')) {
 			define('HYPEGEO_METRIC_SYSTEM', 'SI');
 		}

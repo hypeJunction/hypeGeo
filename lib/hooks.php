@@ -8,16 +8,21 @@ function geocode_location($hook, $type, $return, $params) {
 	return ElggGeocoder::geocodeAddress($location);
 }
 
-function geocode_location_metadata($event, $type, $metadata) {
+function geocode_location_metadata(\Elgg\Event $event): void {
 
-	if ($metadata->name != 'location') {
-		return true;
+	$metadata = $event->getObject();
+	if (!$metadata instanceof \ElggMetadata) {
+		return;
 	}
 
-	switch ($event) {
+	if ($metadata->name !== 'location') {
+		return;
+	}
 
-		case 'create' :
-		case 'update' :
+	switch ($event->getName()) {
+
+		case 'create':
+		case 'update':
 			$coordinates = elgg_geocode_location($metadata->value);
 			if ($coordinates) {
 				set_entity_coordinates($metadata->entity_guid, $coordinates['lat'], $coordinates['long']);
@@ -26,12 +31,10 @@ function geocode_location_metadata($event, $type, $metadata) {
 			}
 			break;
 
-		default :
+		default:
 			unset_entity_coordinates($metadata->entity_guid);
 			break;
 	}
-
-	return true;
 }
 
 function search_custom_types($hook, $type, $return, $params) {

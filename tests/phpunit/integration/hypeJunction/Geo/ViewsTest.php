@@ -75,9 +75,9 @@ class ViewsTest extends IntegrationTestCase {
             $this->markTestSkipped('plugins/hypeGeo/settings view not registered');
             return;
         }
-        $plugin = elgg_get_plugin_from_id('hypeGeo');
+        $plugin = elgg_get_plugin_from_id('hypegeo');
         if (!$plugin) {
-            $this->markTestSkipped('hypeGeo plugin entity not in test DB');
+            $this->markTestSkipped('hypegeo plugin entity not in test DB');
             return;
         }
         $output = elgg_view('plugins/hypeGeo/settings', ['entity' => $plugin]);

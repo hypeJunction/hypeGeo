@@ -33,9 +33,9 @@ class HooksTest extends IntegrationTestCase {
     }
 
     public function testSearchCustomTypesIncludesProximityWhenEnabled(): void {
-        $plugin = elgg_get_plugin_from_id('hypeGeo');
+        $plugin = elgg_get_plugin_from_id('hypegeo');
         if (!$plugin) {
-            $this->markTestSkipped('hypeGeo plugin entity not found in test DB');
+            $this->markTestSkipped('hypegeo plugin entity not found in test DB');
             return;
         }
         $plugin->setSetting('proximity_search', 1);
@@ -54,7 +54,11 @@ class HooksTest extends IntegrationTestCase {
             'value'        => 'ignored',
             'entity_guid'  => 0,
         ];
-        $result = geocode_location_metadata('update', 'metadata', $md);
-        $this->assertTrue($result);
+        $event = $this->createMock(\Elgg\Event::class);
+        $event->method('getObject')->willReturn($md);
+        $event->method('getName')->willReturn('update');
+
+        geocode_location_metadata($event);
+        $this->addToAssertionCount(1);
     }
 }

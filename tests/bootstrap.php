@@ -43,7 +43,7 @@ spl_autoload_register(function ($class) use ($pluginRoot) {
 // Declare the constants the plugin's procedural code references, in case
 // start.php never ran (plugin not active in the c_i_elgg_ test DB).
 if (!defined('hypeJunction\\Geo\\PLUGIN_ID')) {
-    define('hypeJunction\\Geo\\PLUGIN_ID', 'hypeGeo');
+    define('hypeJunction\\Geo\\PLUGIN_ID', 'hypegeo');
 }
 if (!defined('hypeJunction\\Geo\\SEARCH_RADIUS')) {
     define('hypeJunction\\Geo\\SEARCH_RADIUS', 1000000);
