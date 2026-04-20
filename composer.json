@@ -21,7 +21,6 @@
 	"require": {
 		"php": ">=7.4",
 		"composer/installers": "^2.0",
-		"willdurand/geocoder": "^4.0",
 		"elgg/elgg": "^4.0"
 	},
 	"config": {
