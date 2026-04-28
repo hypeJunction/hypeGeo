@@ -5,7 +5,7 @@ namespace hypeJunction\Geo;
 use Elgg\IntegrationTestCase;
 
 /**
- * Exercises the plugin's registered hooks:
+ * Exercises the plugin's registered event handlers:
  *   - geocode/location        (returns lat/long from an address string)
  *   - search_types/get_types  (adds 'proximity' when enabled in settings)
  *   - search/proximity        (proximity entity listing)
@@ -20,7 +20,19 @@ class HooksTest extends IntegrationTestCase {
         return '';
     }
 
-    public function testGeocodeLocationHookHandlerIsCallable(): void {
+    private function makeEvent(string $name, string $type, mixed $value = null, array $params = []): \Elgg\Event {
+        $event = $this->getMockBuilder(\Elgg\Event::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $event->method('getName')->willReturn($name);
+        $event->method('getType')->willReturn($type);
+        $event->method('getValue')->willReturn($value);
+        $event->method('getParam')->willReturnCallback(fn($key, $default = null) => $params[$key] ?? $default);
+        $event->method('getObject')->willReturn($params['__object'] ?? null);
+        return $event;
+    }
+
+    public function testGeocodeLocationHandlerIsCallable(): void {
         $this->assertTrue(
             function_exists('hypeJunction\\Geo\\geocode_location'),
             'geocode_location handler must be loaded'
@@ -28,7 +40,8 @@ class HooksTest extends IntegrationTestCase {
     }
 
     public function testGeocodeLocationReturnsFalseForEmptyLocation(): void {
-        $result = geocode_location('geocode', 'location', null, ['location' => '']);
+        $event = $this->makeEvent('geocode', 'location', null, ['location' => '']);
+        $result = geocode_location($event);
         $this->assertFalse($result);
     }
 
@@ -40,11 +53,13 @@ class HooksTest extends IntegrationTestCase {
         }
         $plugin->setSetting('proximity_search', 1);
 
-        $result = search_custom_types('search_types', 'get_types', ['user', 'object'], []);
+        $event = $this->makeEvent('search_types', 'get_types', ['user', 'object']);
+        $result = search_custom_types($event);
         $this->assertContains('proximity', $result);
 
         $plugin->setSetting('proximity_search', 0);
-        $result = search_custom_types('search_types', 'get_types', ['user', 'object'], []);
+        $event = $this->makeEvent('search_types', 'get_types', ['user', 'object']);
+        $result = search_custom_types($event);
         $this->assertNotContains('proximity', $result);
     }
 
@@ -54,9 +69,7 @@ class HooksTest extends IntegrationTestCase {
             'value'        => 'ignored',
             'entity_guid'  => 0,
         ];
-        $event = $this->createMock(\Elgg\Event::class);
-        $event->method('getObject')->willReturn($md);
-        $event->method('getName')->willReturn('update');
+        $event = $this->makeEvent('update', 'metadata', null, ['__object' => $md]);
 
         geocode_location_metadata($event);
         $this->addToAssertionCount(1);
