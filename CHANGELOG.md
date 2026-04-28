@@ -1,5 +1,26 @@
 # Changelog
 
+## 5.0.0 — Elgg 5.x compatibility
+
+### Breaking
+- Requires Elgg `^5.0` and PHP `>=8.2`.
+- Hook handler functions in `lib/hooks.php` now receive `\Elgg\Event $event`
+  instead of the old four-argument `($hook, $type, $return, $params)` signature.
+- MySQL 8.0 minimum. Legacy spatial functions (`GeomFromText`, `GLength`,
+  `LineStringFromWKB`) replaced with `ST_GeomFromText` / `ST_Distance`.
+- `entity_geometry` table switched from `ENGINE=MyISAM` to `ENGINE=InnoDB`
+  with explicit `SRID 0` column. Existing installs need to re-run the upgrade.
+- `Elgg\Upgrade\AsynchronousUpgrade` changed to abstract class in Elgg 5.x;
+  `CreateEntityGeometryTable` now extends it instead of implementing it.
+- Raw-string `getData()` / `insertData()` / `deleteData()` API removed in
+  Elgg 5.x. All low-level SQL now uses `getConnection()->executeQuery/Statement`.
+
+### Fixed
+- `Countries::registerTranslations()`: `add_translation()` removed in Elgg 5.x;
+  now calls `elgg()->translator->addTranslation()` directly.
+- `views/default/forms/geo/postal_address.php`: `$label_attrs` is now initialized
+  to `''` before the conditional to avoid PHP 8.2 undefined-variable warning.
+
 ## 4.0.0 — Elgg 4.x compatibility
 
 ### Breaking
