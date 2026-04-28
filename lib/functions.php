@@ -39,7 +39,7 @@ function add_order_by_proximity_clauses($options = array(), $lat = 0, $long = 0)
 
 	$prefix = elgg()->db->prefix;
 
-	$options['selects'][] = "(GLength(LineStringFromWKB(LineString(eg.geometry,GeomFromText('POINT({$lat} {$long})'))))) as proximity";
+	$options['selects'][] = "ST_Distance(eg.geometry, ST_ST_GeomFromText('POINT({$lat} {$long})')) as proximity";
 	$options['joins'][] = "JOIN {$prefix}entity_geometry eg ON e.guid = eg.entity_guid";
 	$options['order_by'] = "proximity ASC, e.time_updated DESC";
 
@@ -59,7 +59,7 @@ function add_distance_constraint_clauses($options = array(), $lat = 0, $long = 0
 
 	$prefix = elgg()->db->prefix;
 
-	$options['wheres'][] = "((GLength(LineStringFromWKB(LineString(eg.geometry,GeomFromText('POINT({$lat} {$long})')))))*60*1825*{$ratio} <= {$radius})";
+	$options['wheres'][] = "(ST_Distance(eg.geometry, ST_ST_GeomFromText('POINT({$lat} {$long})')) * 60 * 1825 * {$ratio} <= {$radius})";
 	$options['joins'][] = "JOIN {$prefix}entity_geometry eg ON e.guid = eg.entity_guid";
 	return $options;
 }
@@ -91,8 +91,8 @@ function set_entity_coordinates($entity_guid = 0, $lat = 0, $long = 0) {
 	$db = elgg()->db;
 	$prefix = $db->prefix;
 	$query = "INSERT INTO {$prefix}entity_geometry (entity_guid, geometry)
-							VALUES ({$entity->guid}, GeomFromText('POINT({$lat} {$long})'))
-							ON DUPLICATE KEY UPDATE geometry=GeomFromText('POINT({$lat} {$long})')";
+							VALUES ({$entity->guid}, ST_GeomFromText('POINT({$lat} {$long})'))
+							ON DUPLICATE KEY UPDATE geometry=ST_GeomFromText('POINT({$lat} {$long})')";
 	return $db->insertData($query);
 }
 

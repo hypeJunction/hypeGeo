@@ -2,9 +2,9 @@
 
 namespace hypeJunction\Geo;
 
-function geocode_location($hook, $type, $return, $params) {
+function geocode_location(\Elgg\Event $event): mixed {
 
-	$location = elgg_extract('location', $params, false);
+	$location = $event->getParam('location', false);
 	return ElggGeocoder::geocodeAddress($location);
 }
 
@@ -37,17 +37,19 @@ function geocode_location_metadata(\Elgg\Event $event): void {
 	}
 }
 
-function search_custom_types($hook, $type, $return, $params) {
+function search_custom_types(\Elgg\Event $event): mixed {
 
+	$return = $event->getValue();
 	if (elgg_get_plugin_setting('proximity_search', PLUGIN_ID)) {
 		$return[] = 'proximity';
 	}
 	return $return;
 }
 
-function search_by_proximity_hook($hook, $type, $return, $params) {
+function search_by_proximity_hook(\Elgg\Event $event): mixed {
 
-	$query = $params['query'];
+	$return = $event->getValue();
+	$query = $event->getParam('query');
 	$coords = elgg_geocode_location($query);
 	if (!$coords) {
 		return $return;
