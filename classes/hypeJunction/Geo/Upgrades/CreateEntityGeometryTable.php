@@ -49,7 +49,7 @@ class CreateEntityGeometryTable extends AsynchronousUpgrade
 				SPATIAL KEY `geometry_idx` (`geometry`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
 
-			$db->insertData($sql);
+			$db->getConnection('write')->executeStatement($sql);
 			$result->addSuccesses(1);
 		} catch (\Throwable $e) {
 			$result->addError($e->getMessage());
@@ -63,7 +63,10 @@ class CreateEntityGeometryTable extends AsynchronousUpgrade
 	{
 		try {
 			$db = elgg()->db;
-			$rows = $db->getData("SHOW TABLES LIKE '{$db->prefix}entity_geometry'");
+			$tableName = $db->prefix . 'entity_geometry';
+			$rows = $db->getConnection('read')
+				->executeQuery("SHOW TABLES LIKE ?", [$tableName])
+				->fetchAllAssociative();
 			return !empty($rows);
 		} catch (\Throwable $e) {
 			return false;

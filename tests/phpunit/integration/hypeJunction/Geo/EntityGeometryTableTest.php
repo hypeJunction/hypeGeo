@@ -23,8 +23,10 @@ class EntityGeometryTableTest extends IntegrationTestCase {
 
     public function testEntityGeometryTableExists(): void {
         $db = elgg()->db;
-        $prefix = $db->prefix;
-        $rows = $db->getData("SHOW TABLES LIKE '{$prefix}entity_geometry'");
+        $tableName = $db->prefix . 'entity_geometry';
+        $rows = $db->getConnection('read')
+            ->executeQuery("SHOW TABLES LIKE ?", [$tableName])
+            ->fetchAllAssociative();
         $this->assertNotEmpty($rows, 'entity_geometry table should exist (created by activate.php)');
     }
 
@@ -58,12 +60,18 @@ class EntityGeometryTableTest extends IntegrationTestCase {
         $this->assertEquals(-0.1278, (float) $object->getLongitude());
 
         $db = elgg()->db;
-        $prefix = $db->prefix;
-        $rows = $db->getData("SELECT entity_guid FROM {$prefix}entity_geometry WHERE entity_guid = {$object->guid}");
+        $conn = $db->getConnection('read');
+        $rows = $conn->executeQuery(
+            "SELECT entity_guid FROM {$db->prefix}entity_geometry WHERE entity_guid = ?",
+            [$object->guid]
+        )->fetchAllAssociative();
         $this->assertCount(1, $rows);
 
         unset_entity_coordinates($object->guid);
-        $rows = $db->getData("SELECT entity_guid FROM {$prefix}entity_geometry WHERE entity_guid = {$object->guid}");
+        $rows = $conn->executeQuery(
+            "SELECT entity_guid FROM {$db->prefix}entity_geometry WHERE entity_guid = ?",
+            [$object->guid]
+        )->fetchAllAssociative();
         $this->assertCount(0, $rows);
     }
 }

@@ -90,10 +90,10 @@ function set_entity_coordinates($entity_guid = 0, $lat = 0, $long = 0) {
 
 	$db = elgg()->db;
 	$prefix = $db->prefix;
-	$query = "INSERT INTO {$prefix}entity_geometry (entity_guid, geometry)
-							VALUES ({$entity->guid}, ST_GeomFromText('POINT({$lat} {$long})'))
-							ON DUPLICATE KEY UPDATE geometry=ST_GeomFromText('POINT({$lat} {$long})')";
-	return $db->insertData($query);
+	$sql = "INSERT INTO {$prefix}entity_geometry (entity_guid, geometry)
+		VALUES ({$entity->guid}, ST_GeomFromText('POINT({$lat} {$long})'))
+		ON DUPLICATE KEY UPDATE geometry=ST_GeomFromText('POINT({$lat} {$long})')";
+	return $db->getConnection('write')->executeStatement($sql) !== false;
 }
 
 function unset_entity_coordinates($entity_guid = 0, $lat = 0, $long = 0) {
@@ -112,8 +112,8 @@ function unset_entity_coordinates($entity_guid = 0, $lat = 0, $long = 0) {
 
 	$db = elgg()->db;
 	$prefix = $db->prefix;
-	$query = "DELETE FROM {$prefix}entity_geometry WHERE entity_guid = {$entity->guid}";
-	return $db->deleteData($query);
+	$sql = "DELETE FROM {$prefix}entity_geometry WHERE entity_guid = {$entity->guid}";
+	return $db->getConnection('write')->executeStatement($sql) !== false;
 }
 
 function search_locations($term, $options = array()) {
