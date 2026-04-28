@@ -35,6 +35,7 @@ services:
       ELGG_DB_PASS: elgg
       ELGG_SITE_URL: "http://localhost:${ELGG_PORT:-8480}/"
       ELGG_DATA_ROOT: "/var/www/data/"
+      ELGG_DB_PREFIX: "elgg_"
       ELGG_ADMIN_EMAIL: "admin@example.com"
       ELGG_ADMIN_PASSWORD: "admin12345"
     ports:
