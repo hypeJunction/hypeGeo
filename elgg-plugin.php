@@ -3,12 +3,12 @@
 return [
 	'plugin' => [
 		'name' => 'hypeGeo',
-		'version' => '4.0.0',
+		'version' => '5.0.0',
 	],
 
 	'bootstrap' => \hypeJunction\Geo\Bootstrap::class,
 
-	'hooks' => [
+	'events' => [
 		'geocode' => [
 			'location' => [
 				'hypeJunction\Geo\geocode_location' => [],
@@ -24,9 +24,6 @@ return [
 				'hypeJunction\Geo\search_by_proximity_hook' => [],
 			],
 		],
-	],
-
-	'events' => [
 		'all' => [
 			'metadata' => [
 				'hypeJunction\Geo\geocode_location_metadata' => [],
