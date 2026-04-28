@@ -12,7 +12,7 @@ use Elgg\Upgrade\Result;
  * fresh installs and on sites upgrading from hypeGeo 3.x where the table
  * was created via the legacy activate.php hook.
  */
-class CreateEntityGeometryTable implements AsynchronousUpgrade
+class CreateEntityGeometryTable extends AsynchronousUpgrade
 {
 	public function getVersion(): int
 	{
