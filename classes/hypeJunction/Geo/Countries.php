@@ -547,7 +547,7 @@ class Countries {
 			'currency:ZWL' => 'Dollar',
 		);
 
-		add_translation('en', $english);
+		elgg()->translator->addTranslation('en', $english);
 	}
 
 	protected static function getRawCountryList() {
