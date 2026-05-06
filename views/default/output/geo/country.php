@@ -23,8 +23,7 @@ if (array_key_exists(strtoupper($value), $countriesByIso)) {
 	echo '<span>' . $countriesByIso[$value] . '</span>';
 	echo elgg_view_icon("flag-$value_lower");
 	echo '</div>';
-} else
-if (array_key_exists($value, $countriesByName)) {
+} else if (array_key_exists($value, $countriesByName)) {
 	$code = $countriesByName[$value];
 	$code_lower = strtolower($code);
 	echo '<div>';

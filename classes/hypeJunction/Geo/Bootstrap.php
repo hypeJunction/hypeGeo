@@ -11,13 +11,12 @@ use Elgg\DefaultPluginBootstrap;
  * referenced in elgg-plugin.php are available. Also ensures the
  * entity_geometry table exists on activation.
  */
-class Bootstrap extends DefaultPluginBootstrap
-{
+class Bootstrap extends DefaultPluginBootstrap {
+
 	/**
 	 * {@inheritdoc}
 	 */
-	public function load()
-	{
+	public function load() {
 		$root = $this->plugin->getPath();
 
 		if (is_file($root . 'vendors/autoload.php')) {
@@ -43,8 +42,7 @@ class Bootstrap extends DefaultPluginBootstrap
 	/**
 	 * {@inheritdoc}
 	 */
-	public function activate()
-	{
+	public function activate() {
 		$upgrade = new Upgrades\CreateEntityGeometryTable();
 		$upgrade->run(new \Elgg\Upgrade\Result(), 0);
 	}

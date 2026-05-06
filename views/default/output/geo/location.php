@@ -14,12 +14,12 @@ if (!$value) {
 }
 
 if (elgg_is_active_plugin('search')) {
-	echo elgg_view('output/url', array(
+	echo elgg_view('output/url', [
 		'text' => $value,
 		'href' => elgg_get_site_url() . "search?search_type=proximity&q=$value",
-	));
+	]);
 } else {
-	echo elgg_view('output/tag', array(
+	echo elgg_view('output/tag', [
 		'value' => $value
-	));
+	]);
 }

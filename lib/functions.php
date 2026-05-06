@@ -8,7 +8,16 @@ use Treffynnon\Navigator\Distance;
 use Treffynnon\Navigator\Distance\Calculator\GreatCircle;
 use Treffynnon\Navigator\LatLong;
 
-function get_entities_by_proximity($options = array(), $lat = null, $long = null, $getter = 'elgg_get_entities') {
+/**
+ * Get entities by proximity.
+ *
+ * @param mixed $options Options
+ * @param mixed $lat     Lat
+ * @param mixed $long    Long
+ * @param mixed $getter  Getter
+ * @return mixed
+ */
+function get_entities_by_proximity($options = [], $lat = null, $long = null, $getter = 'elgg_get_entities') {
 
 	if (is_null($lat) || is_null($long)) {
 		$geopositioning = get_geopositioning();
@@ -28,10 +37,18 @@ function get_entities_by_proximity($options = array(), $lat = null, $long = null
 	return $getter($options);
 }
 
-function add_order_by_proximity_clauses($options = array(), $lat = 0, $long = 0) {
+/**
+ * Add order by proximity clauses.
+ *
+ * @param mixed $options Options
+ * @param mixed $lat     Lat
+ * @param mixed $long    Long
+ * @return mixed
+ */
+function add_order_by_proximity_clauses($options = [], $lat = 0, $long = 0) {
 
 	if (!is_array($options)) {
-		$options = array();
+		$options = [];
 	}
 
 	$lat = (float) $lat;
@@ -41,15 +58,25 @@ function add_order_by_proximity_clauses($options = array(), $lat = 0, $long = 0)
 
 	$options['selects'][] = "ST_Distance(eg.geometry, ST_ST_GeomFromText('POINT({$lat} {$long})')) as proximity";
 	$options['joins'][] = "JOIN {$prefix}entity_geometry eg ON e.guid = eg.entity_guid";
-	$options['order_by'] = "proximity ASC, e.time_updated DESC";
+	$options['order_by'] = 'proximity ASC, e.time_updated DESC';
 
 	return $options;
 }
 
-function add_distance_constraint_clauses($options = array(), $lat = 0, $long = 0, $radius = 50000, $ratio = 1) {
+/**
+ * Add distance constraint clauses.
+ *
+ * @param mixed $options Options
+ * @param mixed $lat     Lat
+ * @param mixed $long    Long
+ * @param mixed $radius  Radius
+ * @param mixed $ratio   Ratio
+ * @return mixed
+ */
+function add_distance_constraint_clauses($options = [], $lat = 0, $long = 0, $radius = 50000, $ratio = 1) {
 
 	if (!is_array($options)) {
-		$options = array();
+		$options = [];
 	}
 
 	$lat = (float) $lat;
@@ -64,6 +91,16 @@ function add_distance_constraint_clauses($options = array(), $lat = 0, $long = 0
 	return $options;
 }
 
+/**
+ * Get distance.
+ *
+ * @param mixed $lat1  Lat1
+ * @param mixed $long1 Long1
+ * @param mixed $lat2  Lat2
+ * @param mixed $long2 Long2
+ * @param mixed $unit  Unit
+ * @return mixed
+ */
 function get_distance($lat1, $long1, $lat2, $long2, $unit = 'metres') {
 	$point1 = new LatLong(new Coordinate($lat1), new Coordinate($long1));
 	$point2 = new LatLong(new Coordinate($lat2), new Coordinate($long2));
@@ -71,6 +108,14 @@ function get_distance($lat1, $long1, $lat2, $long2, $unit = 'metres') {
 	return $distance->get(new GreatCircle());
 }
 
+/**
+ * Set entity coordinates.
+ *
+ * @param mixed $entity_guid Entity guid
+ * @param mixed $lat         Lat
+ * @param mixed $long        Long
+ * @return mixed
+ */
 function set_entity_coordinates($entity_guid = 0, $lat = 0, $long = 0) {
 
 	$lat = (float) $lat;
@@ -96,6 +141,14 @@ function set_entity_coordinates($entity_guid = 0, $lat = 0, $long = 0) {
 	return $db->getConnection('write')->executeStatement($sql) !== false;
 }
 
+/**
+ * Unset entity coordinates.
+ *
+ * @param mixed $entity_guid Entity guid
+ * @param mixed $lat         Lat
+ * @param mixed $long        Long
+ * @return mixed
+ */
 function unset_entity_coordinates($entity_guid = 0, $lat = 0, $long = 0) {
 
 	$entity = get_entity($entity_guid);
@@ -104,11 +157,11 @@ function unset_entity_coordinates($entity_guid = 0, $lat = 0, $long = 0) {
 		return false;
 	}
 
-	elgg_delete_metadata(array(
+	elgg_delete_metadata([
 		'guids' => $entity->guid,
-		'metadata_names' => array('geo:lat', 'geo:long'),
+		'metadata_names' => ['geo:lat', 'geo:long'],
 		'limit' => 0
-	));
+	]);
 
 	$db = elgg()->db;
 	$prefix = $db->prefix;
@@ -116,17 +169,29 @@ function unset_entity_coordinates($entity_guid = 0, $lat = 0, $long = 0) {
 	return $db->getConnection('write')->executeStatement($sql) !== false;
 }
 
-function search_locations($term, $options = array()) {
+/**
+ * Search locations.
+ *
+ * @param mixed $term    Term
+ * @param mixed $options Options
+ * @return mixed
+ */
+function search_locations($term, $options = []) {
 
-	$q = str_replace(array('_', '%'), array('\_', '\%'), $term);
+	$q = str_replace(['_', '%'], ['\_', '\%'], $term);
 
-	$options['metadata_names'] = array('location', 'temp_location');
-	$options['group_by'] = "v.string";
-	$options['wheres'] = array("v.string LIKE '%" . addcslashes($q, "'\\") . "%'");
+	$options['metadata_names'] = ['location', 'temp_location'];
+	$options['group_by'] = 'v.string';
+	$options['wheres'] = ["v.string LIKE '%" . addcslashes($q, "'\\") . "%'"];
 
 	return elgg_get_metadata($options);
 }
 
+/**
+ * Get geopositioning.
+ *
+ * @return mixed
+ */
 function get_geopositioning() {
 
 	if (isset($_SESSION['geopositioning'])) {
@@ -137,27 +202,35 @@ function get_geopositioning() {
 
 	if ($data) {
 		$formatter = new Formatter($data);
-		return array(
-			'location' => $formatter->format("%S %n, %z %L, %C"),
+		return [
+			'location' => $formatter->format('%S %n, %z %L, %C'),
 			'latitude' => $data->getLatitude(),
 			'longitude' => $data->getLongitude()
-		);
+		];
 	} else if (elgg_is_logged_in()) {
 		$user = elgg_get_logged_in_user_entity();
-		return array(
+		return [
 			'location' => $user->location,
 			'latitude' => $user->getLatitude(),
 			'longitude' => $user->getLongitude()
-		);
+		];
 	} else {
-		return array(
+		return [
 			'location' => '',
 			'latitude' => 0,
 			'longitude' => 0
-		);
+		];
 	}
 }
 
+/**
+ * Set geopositioning.
+ *
+ * @param mixed $location  Location
+ * @param mixed $latitude  Latitude
+ * @param mixed $longitude Longitude
+ * @return mixed
+ */
 function set_geopositioning($location = '', $latitude = 0, $longitude = 0) {
 
 	$lat = (float) $latitude;
@@ -171,9 +244,9 @@ function set_geopositioning($location = '', $latitude = 0, $longitude = 0) {
 		}
 	}
 
-	$_SESSION['geopositioning'] = array(
+	$_SESSION['geopositioning'] = [
 		'location' => $location,
 		'latitude' => (float) $latitude,
 		'longitude' => (float) $longitude
-	);
+	];
 }

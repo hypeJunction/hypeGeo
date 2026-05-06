@@ -15,55 +15,56 @@ $value = elgg_extract('value', $vars);
 
 $label_attrs = '';
 if ($required) {
-	$label_attrs = elgg_format_attributes(array(
+	$label_attrs = elgg_format_attributes([
 		'title' => elgg_echo('geo:required'),
 		'class' => 'geo-required',
-	));
+	]);
 }
-$street_address = elgg_view('input/text', array(
+
+$street_address = elgg_view('input/text', [
 	'name' => "{$prefix}[street_address]",
 	'value' => elgg_extract('street_address', $value),
 	'class' => 'geo-input-street-address',
 	'placeholder' => elgg_echo('geo:postal_address:street_address'),
 	'required' => $required
-		));
+]);
 
-$extended_address = elgg_view('input/text', array(
+$extended_address = elgg_view('input/text', [
 	'name' => "{$prefix}[extended_address]",
 	'value' => elgg_extract('extended_address', $value),
 	'class' => 'geo-input-extended-address',
 	'placeholder' => elgg_echo('geo:postal_address:extended_address')
-		));
+]);
 
-$locality = elgg_view('input/text', array(
+$locality = elgg_view('input/text', [
 	'name' => "{$prefix}[locality]",
 	'value' => elgg_extract('locality', $value),
 	'class' => 'geo-input-locality',
 	'placeholder' => elgg_echo('geo:postal_address:locality'),
 	'required' => $required
-		));
+]);
 
-$region = elgg_view('input/text', array(
+$region = elgg_view('input/text', [
 	'name' => "{$prefix}[region]",
 	'value' => elgg_extract('region', $value),
 	'class' => 'geo-input-region',
 	'placeholder' => elgg_echo('geo:postal_address:region'),
 	'required' => $required
-		));
+]);
 
-$postal_code = elgg_view('input/text', array(
+$postal_code = elgg_view('input/text', [
 	'name' => "{$prefix}[postal_code]",
 	'value' => elgg_extract('postal_code', $value),
 	'class' => 'geo-input-postal-code',
 	'placeholder' => elgg_echo('geo:postal_address:postal_code'),
 	'required' => $required
-		));
+]);
 
-$country = elgg_view('input/geo/country', array(
+$country = elgg_view('input/geo/country', [
 	'name' => "{$prefix}[country_code]",
 	'value' => elgg_extract('country_code', $value),
 	'required' => $required
-		));
+]);
 ?>
 
 <fieldset class="geo-postal-address" data-postal-address>

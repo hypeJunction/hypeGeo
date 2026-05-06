@@ -27,7 +27,7 @@ if (elgg_view_exists('input/tokeninput')) {
 		$vars['strict'] = false;
 	}
 
-	$vars['data-token-delimiter'] = ";";
+	$vars['data-token-delimiter'] = ';';
 	$vars['data-allow-tab-out'] = true;
 
 	echo elgg_view('input/tokeninput', $vars);

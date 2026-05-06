@@ -18,6 +18,6 @@ $address = elgg_extract('value', $vars);
 		<span class="geo-locality"><?php echo elgg_extract('locality', $address) ?></span>,
 		<abbr class="geo-region"><?php echo elgg_extract('region', $address) ?></abbr>
 		<span class="geo-postal-code"><?php echo elgg_extract('postal_code', $address) ?></span>
-		<div class="geo-country-name"><?php echo elgg_view('output/geo/country', array('value' => elgg_extract('country_code', $address))) ?></div>
+		<div class="geo-country-name"><?php echo elgg_view('output/geo/country', ['value' => elgg_extract('country_code', $address)]) ?></div>
 	</div>
 </div>

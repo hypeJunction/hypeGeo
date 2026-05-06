@@ -12,28 +12,33 @@ use Geocoder\Provider\GoogleMapsProvider;
 use Geocoder\Provider\NominatimProvider;
 use Geocoder\Provider\YandexProvider;
 
+/**
+ * ElggGeocoder class.
+ */
 class ElggGeocoder {
 
 	private static $adapter;
+
 	private static $providers;
+
 	private static $geocoder;
 
 	/**
 	 * Constructs a geocoder and builds providers from plugin settings
 	 */
-	function __construct() {
+	public function __construct() {
 
 		if (!isset(self::$adapter)) {
 			self::$adapter = new CurlHttpAdapter();
 		}
 
 		if (!isset(self::$providers)) {
-			self::$providers = array_filter(array(
+			self::$providers = array_filter([
 				$this->buildGoogleMapsProvider(),
 				$this->buildNominatimProvider(),
 				$this->buildYandexProvider(),
 				$this->buildGoogleMapsBusinessProvider(),
-			));
+			]);
 		}
 
 		if (!count(self::$providers)) {
@@ -49,8 +54,8 @@ class ElggGeocoder {
 	/**
 	 * Geocode an address string
 	 *
-	 * @param string $address Address or location
-	 * @param boolean $filter Filter the result for elgg_geocode_location() or output all data
+	 * @param string  $address Address or location
+	 * @param boolean $filter  Filter the result for elgg_geocode_location() or output all data
 	 * @return mixed
 	 */
 	public static function geocodeAddress($address = '', $filter = true) {
@@ -74,14 +79,18 @@ class ElggGeocoder {
 		try {
 			$data = $geocoder->geocode($address);
 		} catch (Exception $e) {
-			elgg_log("ElggGeocoder::geocodeAddress failed with the following message: " . $e->getMessage(), 'WARNING');
+			elgg_log('ElggGeocoder::geocodeAddress failed with the following message: ' . $e->getMessage(), 'WARNING');
 		}
 
 		if ($data) {
-			return ($filter) ? array(
-				'lat' => $data->getLatitude(),
-				'long' => $data->getLongitude(),
-					) : $data;
+			if ($filter) {
+				return [
+					'lat' => $data->getLatitude(),
+					'long' => $data->getLongitude(),
+				];
+			}
+
+			return $data;
 		} else {
 			return false;
 		}
@@ -90,12 +99,12 @@ class ElggGeocoder {
 	/**
 	 * Reverse lookup of coordinates
 	 *
-	 * @param float $latitude Latitude
+	 * @param float $latitude  Latitude
 	 * @param float $longitude Longitude
-	 * @param mixed $format Format of the output string, or false to output result object
+	 * @param mixed $format    Format of the output string, or false to output result object
 	 * @return mixed
 	 */
-	public static function reverseCoordinates($latitude, $longitude, $format = "%S %n, %z %L, %C") {
+	public static function reverseCoordinates($latitude, $longitude, $format = '%S %n, %z %L, %C') {
 		if (!is_float($latitude) || !is_float($longitude)) {
 			return false;
 		}
@@ -112,7 +121,7 @@ class ElggGeocoder {
 		try {
 			$data = $geocoder->reverse($latitude, $longitude);
 		} catch (Exception $e) {
-			elgg_log("ElggGeocoder::reverseCooridnates failed with the following message: " . $e->getMessage(), 'WARNING');
+			elgg_log('ElggGeocoder::reverseCooridnates failed with the following message: ' . $e->getMessage(), 'WARNING');
 		}
 
 		if ($data) {
@@ -130,11 +139,11 @@ class ElggGeocoder {
 	/**
 	 * Resolve an IP address to location
 	 *
-	 * @param string $ip IP Address
-	 * @param mixed $format Format for an output string, or false to output result object
+	 * @param string $ip     IP Address
+	 * @param mixed  $format Format for an output string, or false to output result object
 	 * @return mixed
 	 */
-	public static function resolveIP($ip = '', $format = "%S %n, %z %L, %C") {
+	public static function resolveIP($ip = '', $format = '%S %n, %z %L, %C') {
 		if (!$ip) {
 			return false;
 		}
@@ -162,6 +171,11 @@ class ElggGeocoder {
 		}
 	}
 
+	/**
+	 * Build google maps provider.
+	 *
+	 * @return mixed
+	 */
 	private function buildGoogleMapsProvider() {
 
 		$provider = 'GoogleMapsProvider';
@@ -178,11 +192,17 @@ class ElggGeocoder {
 		} else {
 			$useSsl = true;
 		}
+
 		return new GoogleMapsProvider(
 				$adapter, $locale, $region, $useSsl, $apiKey
 		);
 	}
 
+	/**
+	 * Build nominatim provider.
+	 *
+	 * @return mixed
+	 */
 	private function buildNominatimProvider() {
 
 		$provider = 'NominatimProvider';
@@ -198,6 +218,11 @@ class ElggGeocoder {
 		);
 	}
 
+	/**
+	 * Build yandex provider.
+	 *
+	 * @return mixed
+	 */
 	private function buildYandexProvider() {
 
 		$provider = 'YandexProvider';
@@ -211,6 +236,11 @@ class ElggGeocoder {
 		return new YandexProvider($adapter, $locale, $toponym);
 	}
 
+	/**
+	 * Build google maps business provider.
+	 *
+	 * @return mixed
+	 */
 	private function buildGoogleMapsBusinessProvider() {
 
 		$provider = 'GoogleMapsBusinessProvider';
@@ -228,6 +258,11 @@ class ElggGeocoder {
 		return new GoogleMapsBusinessProvider($adapter, $client_id, $private_key, $locale, $region, $useSsl);
 	}
 
+	/**
+	 * Build free geo ip provider.
+	 *
+	 * @return mixed
+	 */
 	private function buildFreeGeoIpProvider() {
 		$provider = 'FreeGeoIpProvider';
 		if (!elgg_get_plugin_setting($provider, PLUGIN_ID)) {
@@ -239,5 +274,4 @@ class ElggGeocoder {
 
 		return new GoogleMapsBusinessProvider($adapter, $locale);
 	}
-
 }
