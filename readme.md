@@ -1,9 +1,8 @@
 Elgg Geo Tools
 ================
+![Elgg 5.x](https://img.shields.io/badge/Elgg-5.x-orange.svg?style=flat-square)
 
-Various tools intended to simplify location-aware development
-
-[My phone bill is due!](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=P7QA9CFMENBKA)
+Tools to simplify location-aware development in Elgg.
 
 
 ## Dependencies

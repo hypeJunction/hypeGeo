@@ -2,7 +2,7 @@
 	"name": "hypejunction/hypegeo",
 	"type": "elgg-plugin",
 	"description": "Tools to simplify location-aware development in Elgg",
-	"homepage": "http://hypejunction.com",
+	"homepage": "https://github.com/hypeJunction/hypegeo",
 	"keywords": [
 		"elgg",
 		"plugin",
