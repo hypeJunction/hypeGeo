@@ -1,3 +1,10 @@
+:root {
+	--geo-icon-color: #4690d6;
+	--geo-icon-size: 16px;
+	--geo-icon-margin: 10px;
+	--geo-search-item-indent: 30px;
+}
+
 .elgg-icon.elgg-icon-geo-location {
   background: none;
   display: inline-block;
@@ -10,11 +17,11 @@
 }
 .elgg-icon.elgg-icon-geo-location:before {
   content: "\f041";
-  color: #4690d6;
-  font-size: 16px;
-  margin-right: 10px;
+  color: var(--geo-icon-color);
+  font-size: var(--geo-icon-size);
+  margin-right: var(--geo-icon-margin);
 }
 
 .geo-search-item > .elgg-body {
-  margin-left: 30px;
+  margin-left: var(--geo-search-item-indent);
 }
