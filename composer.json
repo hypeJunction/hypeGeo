@@ -6,7 +6,10 @@
 	"homepage": "http://hypejunction.com",
 	"minimum-stability": "stable",
 	"keywords": [
-		"elgg", "plugin", "geography", "geocoding"
+		"elgg",
+		"plugin",
+		"geography",
+		"geocoding"
 	],
 	"license": "GPL-2.0",
 	"authors": [
@@ -24,9 +27,8 @@
 	},
 	"require": {
 		"php": ">=5.3.3",
-		"composer/installers": ">=1.0.8",
+		"composer/installers": "^1.0 || ^2.0",
 		"willdurand/geocoder": "@stable",
 		"treffynnon/navigator": "1.0.0"
 	}
 }
-
