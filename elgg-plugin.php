@@ -3,7 +3,7 @@
 return [
 	'plugin' => [
 		'name' => 'hypeGeo',
-		'version' => '5.0.0',
+		'version' => '6.0.0',
 	],
 
 	'bootstrap' => \hypeJunction\Geo\Bootstrap::class,
