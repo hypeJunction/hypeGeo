@@ -19,9 +19,10 @@
 	],
 	"minimum-stability": "stable",
 	"require": {
-		"php": ">=8.2",
+		"php": ">=8.3",
 		"composer/installers": "^2.0",
-		"elgg/elgg": "~6.1.0"
+		"elgg/elgg": "~7.0.0",
+		"ext-intl": "*"
 	},
 	"config": {
 		"allow-plugins": {
