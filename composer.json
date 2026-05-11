@@ -34,6 +34,5 @@
         "elgg-plugin": {
             "id": "hypegeo"
         }
-    },
-    "version": "7.0.0"
+    }
 }
