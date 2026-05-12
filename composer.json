@@ -26,8 +26,9 @@
 		"preferred-install": "dist"
 	},
 	"require": {
-		"php": ">=5.3.3",
 		"composer/installers": "^1.0 || ^2.0",
+		"php": ">=7.2",
+		"elgg/elgg": "^3.0",
 		"willdurand/geocoder": "@stable",
 		"treffynnon/navigator": "1.0.0"
 	}
