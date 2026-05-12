@@ -31,5 +31,8 @@
 		"elgg/elgg": "^3.0",
 		"willdurand/geocoder": "@stable",
 		"treffynnon/navigator": "1.0.0"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^9.6"
 	}
 }
