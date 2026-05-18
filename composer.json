@@ -1,37 +1,42 @@
 {
-	"name": "hypejunction/hypegeo",
-	"type": "elgg-plugin",
-	"description": "Tools to simplify location-aware development in Elgg",
-	"homepage": "http://hypejunction.com",
-	"keywords": [
-		"elgg",
-		"plugin",
-		"geography",
-		"geocoding",
-		"location"
-	],
-	"license": "GPL-2.0-or-later",
-	"authors": [
-		{
-			"name": "Ismayil Khayredinov",
-			"email": "ismayil.khayredinov@gmail.com"
-		}
-	],
-	"minimum-stability": "stable",
-	"require": {
-		"php": ">=7.4",
-		"composer/installers": "^2.0",
-		"elgg/elgg": "^4.0"
-	},
-	"config": {
-		"allow-plugins": {
-			"composer/installers": true
-		},
-		"preferred-install": "dist"
-	},
-	"extra": {
-		"elgg-plugin": {
-			"id": "hypegeo"
-		}
-	}
+    "name": "hypejunction/hypegeo",
+    "type": "elgg-plugin",
+    "description": "Tools to simplify location-aware development in Elgg",
+    "homepage": "http://hypejunction.com",
+    "keywords": [
+        "elgg",
+        "plugin",
+        "geography",
+        "geocoding",
+        "location"
+    ],
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Ismayil Khayredinov",
+            "email": "ismayil.khayredinov@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.4",
+        "composer/installers": "^2.0",
+        "elgg/elgg": "^4.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        },
+        "preferred-install": "dist"
+    },
+    "extra": {
+        "elgg-plugin": {
+            "id": "hypegeo"
+        }
+    },
+    "autoload": {
+        "files": [
+            "lib/functions.php"
+        ]
+    }
 }
