@@ -14,7 +14,7 @@ if (!isset($vars['value'])) {
 	}
 }
 
-if (elgg_view_exists('input/tokeninput')) {
+if (\elgg_view_exists('input/tokeninput')) {
 	$vars['callback'] = 'hypeJunction\\Geo\\search_locations';
 
 	$vars['class'] = 'wall-location-tokeninput';
@@ -30,7 +30,7 @@ if (elgg_view_exists('input/tokeninput')) {
 	$vars['data-token-delimiter'] = ';';
 	$vars['data-allow-tab-out'] = true;
 
-	echo elgg_view('input/tokeninput', $vars);
+	echo \elgg_view('input/tokeninput', $vars);
 } else {
-	echo elgg_view('input/text', $vars);
+	echo \elgg_view('input/text', $vars);
 }

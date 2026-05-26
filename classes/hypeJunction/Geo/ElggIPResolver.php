@@ -35,7 +35,7 @@ class ElggIPResolver {
 		}
 
 		if (!count(self::$providers)) {
-			elgg_add_admin_notice('geo:providers', elgg_echo('geo:providers:none'));
+			\elgg_add_admin_notice('geo:providers', \elgg_echo('geo:providers:none'));
 		} else if (!isset(self::$geocoder)) {
 			$geocoder = new Geocoder();
 			$geocoder->registerProviders(self::$providers);
@@ -67,7 +67,7 @@ class ElggIPResolver {
 		try {
 			$data = $geocoder->geocode($ip);
 		} catch (Exception $e) {
-			elgg_log('ElggIPResolver::resolveIP failed with the following message: ' . $e->getMessage(), 'WARNING');
+			\elgg_log('ElggIPResolver::resolveIP failed with the following message: ' . $e->getMessage(), 'WARNING');
 		}
 		
 		if ($data) {
@@ -89,12 +89,12 @@ class ElggIPResolver {
 	 */
 	private function buildFreeGeoIpProvider() {
 		$provider = 'FreeGeoIpProvider';
-		if (!elgg_get_plugin_setting($provider, PLUGIN_ID)) {
+		if (!\elgg_get_plugin_setting($provider, PLUGIN_ID)) {
 			return null;
 		}
 
 		$adapter = self::$adapter;
-		$locale = elgg_get_plugin_setting("$provider:locale", PLUGIN_ID);
+		$locale = \elgg_get_plugin_setting("$provider:locale", PLUGIN_ID);
 
 		return new FreeGeoIpProvider($adapter, $locale);
 	}

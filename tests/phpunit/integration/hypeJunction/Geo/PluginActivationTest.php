@@ -18,7 +18,7 @@ class PluginActivationTest extends IntegrationTestCase {
     }
 
     public function testPluginRegistered(): void {
-        $plugin = elgg_get_plugin_from_id('hypegeo');
+        $plugin = \elgg_get_plugin_from_id('hypegeo');
         if (!$plugin) {
             $this->markTestSkipped('hypegeo plugin entity not in test DB (c_i_elgg_)');
             return;

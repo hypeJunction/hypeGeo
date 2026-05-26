@@ -46,7 +46,7 @@ class HooksTest extends IntegrationTestCase {
     }
 
     public function testSearchCustomTypesIncludesProximityWhenEnabled(): void {
-        $plugin = elgg_get_plugin_from_id('hypegeo');
+        $plugin = \elgg_get_plugin_from_id('hypegeo');
         if (!$plugin) {
             $this->markTestSkipped('hypegeo plugin entity not found in test DB');
             return;
