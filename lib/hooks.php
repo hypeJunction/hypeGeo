@@ -34,7 +34,7 @@ function geocode_location_metadata(\Elgg\Event $event): void {
 	switch ($event->getName()) {
 		case 'create':
 		case 'update':
-			$coordinates = elgg_geocode_location($metadata->value);
+			$coordinates = \elgg_geocode_location($metadata->value);
 			if ($coordinates) {
 				set_entity_coordinates($metadata->entity_guid, $coordinates['lat'], $coordinates['long']);
 			} else {
@@ -57,7 +57,7 @@ function geocode_location_metadata(\Elgg\Event $event): void {
 function search_custom_types(\Elgg\Event $event): mixed {
 
 	$return = $event->getValue();
-	if (elgg_get_plugin_setting('proximity_search', PLUGIN_ID)) {
+	if (\elgg_get_plugin_setting('proximity_search', PLUGIN_ID)) {
 		$return[] = 'proximity';
 	}
 
@@ -74,18 +74,18 @@ function search_by_proximity_hook(\Elgg\Event $event): mixed {
 
 	$return = $event->getValue();
 	$query = $event->getParam('query');
-	$coords = elgg_geocode_location($query);
+	$coords = \elgg_geocode_location($query);
 	if (!$coords) {
 		return $return;
 	}
 
-	$registered_entities = elgg_get_config('registered_entities');
+	$registered_entities = \elgg_get_config('registered_entities');
 	$options = [
 		'types' => ['object', 'user', 'group'],
 		'subtypes' => array_merge(
-			(array) elgg_extract('object', $registered_entities, []),
-			(array) elgg_extract('user', $registered_entities, []),
-			(array) elgg_extract('group', $registered_entities, [])
+			(array) \elgg_extract('object', $registered_entities, []),
+			(array) \elgg_extract('user', $registered_entities, []),
+			(array) \elgg_extract('group', $registered_entities, [])
 		),
 		'limit' => get_input('limit', 20),
 		'offset' => get_input('proximity_offset', 0),
@@ -96,10 +96,10 @@ function search_by_proximity_hook(\Elgg\Event $event): mixed {
 	$options = add_order_by_proximity_clauses($options, $coords['lat'], $coords['long']);
 	$options = add_distance_constraint_clauses($options, $coords['lat'], $coords['long'], SEARCH_RADIUS);
 
-	$count = elgg_get_entities($options);
+	$count = \elgg_get_entities($options);
 	if ($count) {
 		$options['count'] = false;
-		$entities = elgg_get_entities($options);
+		$entities = \elgg_get_entities($options);
 	}
 
 	if (!empty($entities)) {
@@ -112,7 +112,7 @@ function search_by_proximity_hook(\Elgg\Event $event): mixed {
 
 			$distance = get_distance($entity->getLatitude(), $entity->getLongitude(), $coords['lat'], $coords['long']); // distance in metres
 			$distance = round($distance / 1000, 2); // distance in km
-			$distance_str = elgg_echo('geo:search:proximity', [$query, $distance]);
+			$distance_str = \elgg_echo('geo:search:proximity', [$query, $distance]);
 
 			$entity->setVolatileData('search_proximity', $distance_str);
 		}

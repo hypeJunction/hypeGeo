@@ -42,7 +42,7 @@ class ElggGeocoder {
 		}
 
 		if (!count(self::$providers)) {
-			elgg_add_admin_notice('geo:providers', elgg_echo('geo:providers:none'));
+			\elgg_add_admin_notice('geo:providers', \elgg_echo('geo:providers:none'));
 		} else if (!isset(self::$geocoder)) {
 			$geocoder = new Geocoder();
 			$chain = new ChainProvider(self::$providers);
@@ -79,7 +79,7 @@ class ElggGeocoder {
 		try {
 			$data = $geocoder->geocode($address);
 		} catch (Exception $e) {
-			elgg_log('ElggGeocoder::geocodeAddress failed with the following message: ' . $e->getMessage(), 'WARNING');
+			\elgg_log('ElggGeocoder::geocodeAddress failed with the following message: ' . $e->getMessage(), 'WARNING');
 		}
 
 		if ($data) {
@@ -121,7 +121,7 @@ class ElggGeocoder {
 		try {
 			$data = $geocoder->reverse($latitude, $longitude);
 		} catch (Exception $e) {
-			elgg_log('ElggGeocoder::reverseCooridnates failed with the following message: ' . $e->getMessage(), 'WARNING');
+			\elgg_log('ElggGeocoder::reverseCooridnates failed with the following message: ' . $e->getMessage(), 'WARNING');
 		}
 
 		if ($data) {
@@ -179,16 +179,16 @@ class ElggGeocoder {
 	private function buildGoogleMapsProvider() {
 
 		$provider = 'GoogleMapsProvider';
-		if (!elgg_get_plugin_setting($provider, PLUGIN_ID)) {
+		if (!\elgg_get_plugin_setting($provider, PLUGIN_ID)) {
 			return null;
 		}
 
 		$adapter = self::$adapter;
-		$apiKey = elgg_get_plugin_setting("$provider:api_key", PLUGIN_ID);
-		$locale = elgg_get_plugin_setting("$provider:locale", PLUGIN_ID);
-		$region = elgg_get_plugin_setting("$provider:region", PLUGIN_ID);
+		$apiKey = \elgg_get_plugin_setting("$provider:api_key", PLUGIN_ID);
+		$locale = \elgg_get_plugin_setting("$provider:locale", PLUGIN_ID);
+		$region = \elgg_get_plugin_setting("$provider:region", PLUGIN_ID);
 		if (!$apiKey) {
-			$useSsl = elgg_get_plugin_setting("$provider:ssl", PLUGIN_ID);
+			$useSsl = \elgg_get_plugin_setting("$provider:ssl", PLUGIN_ID);
 		} else {
 			$useSsl = true;
 		}
@@ -206,13 +206,13 @@ class ElggGeocoder {
 	private function buildNominatimProvider() {
 
 		$provider = 'NominatimProvider';
-		if (!elgg_get_plugin_setting($provider, PLUGIN_ID)) {
+		if (!\elgg_get_plugin_setting($provider, PLUGIN_ID)) {
 			return null;
 		}
 
 		$adapter = self::$adapter;
-		$locale = elgg_get_plugin_setting("$provider:locale", PLUGIN_ID);
-		$url = elgg_get_plugin_setting("$provider:url", PLUGIN_ID);
+		$locale = \elgg_get_plugin_setting("$provider:locale", PLUGIN_ID);
+		$url = \elgg_get_plugin_setting("$provider:url", PLUGIN_ID);
 		return new NominatimProvider(
 				$adapter, $url, $locale
 		);
@@ -226,13 +226,13 @@ class ElggGeocoder {
 	private function buildYandexProvider() {
 
 		$provider = 'YandexProvider';
-		if (!elgg_get_plugin_setting($provider, PLUGIN_ID)) {
+		if (!\elgg_get_plugin_setting($provider, PLUGIN_ID)) {
 			return null;
 		}
 
 		$adapter = self::$adapter;
-		$locale = elgg_get_plugin_setting("$provider:locale", PLUGIN_ID);
-		$toponym = elgg_get_plugin_setting("$provider:toponym", PLUGIN_ID);
+		$locale = \elgg_get_plugin_setting("$provider:locale", PLUGIN_ID);
+		$toponym = \elgg_get_plugin_setting("$provider:toponym", PLUGIN_ID);
 		return new YandexProvider($adapter, $locale, $toponym);
 	}
 
@@ -244,16 +244,16 @@ class ElggGeocoder {
 	private function buildGoogleMapsBusinessProvider() {
 
 		$provider = 'GoogleMapsBusinessProvider';
-		if (!elgg_get_plugin_setting($provider, PLUGIN_ID)) {
+		if (!\elgg_get_plugin_setting($provider, PLUGIN_ID)) {
 			return null;
 		}
 
 		$adapter = self::$adapter;
-		$locale = elgg_get_plugin_setting("$provider:locale", PLUGIN_ID);
-		$region = elgg_get_plugin_setting("$provider:region", PLUGIN_ID);
-		$useSsl = elgg_get_plugin_setting("$provider:ssl", PLUGIN_ID);
-		$client_id = elgg_get_plugin_setting("$provider:client_id", PLUGIN_ID);
-		$private_key = elgg_get_plugin_setting("$provider:private_key", PLUGIN_ID);
+		$locale = \elgg_get_plugin_setting("$provider:locale", PLUGIN_ID);
+		$region = \elgg_get_plugin_setting("$provider:region", PLUGIN_ID);
+		$useSsl = \elgg_get_plugin_setting("$provider:ssl", PLUGIN_ID);
+		$client_id = \elgg_get_plugin_setting("$provider:client_id", PLUGIN_ID);
+		$private_key = \elgg_get_plugin_setting("$provider:private_key", PLUGIN_ID);
 
 		return new GoogleMapsBusinessProvider($adapter, $client_id, $private_key, $locale, $region, $useSsl);
 	}
@@ -265,12 +265,12 @@ class ElggGeocoder {
 	 */
 	private function buildFreeGeoIpProvider() {
 		$provider = 'FreeGeoIpProvider';
-		if (!elgg_get_plugin_setting($provider, PLUGIN_ID)) {
+		if (!\elgg_get_plugin_setting($provider, PLUGIN_ID)) {
 			return null;
 		}
 
 		$adapter = self::$adapter;
-		$locale = elgg_get_plugin_setting("$provider:locale", PLUGIN_ID);
+		$locale = \elgg_get_plugin_setting("$provider:locale", PLUGIN_ID);
 
 		return new GoogleMapsBusinessProvider($adapter, $locale);
 	}

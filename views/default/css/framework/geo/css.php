@@ -8,7 +8,7 @@ readfile(__DIR__ . '/stylesheet.css');
 [class^=elgg-icon-flag] {
 width: 16px;
 height: 11px;
-background: url(<?php echo elgg_get_site_url() . '/mod/' . PLUGIN_ID . '/graphics/flags.png' ?>) no-repeat
+background: url(<?php echo \elgg_get_site_url() . '/mod/' . PLUGIN_ID . '/graphics/flags.png' ?>) no-repeat
 }
 
 .flag.flag-ad {background-position: -16px 0}

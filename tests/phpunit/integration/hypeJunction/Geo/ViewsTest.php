@@ -14,48 +14,48 @@ class ViewsTest extends IntegrationTestCase {
     }
 
     public function testLocationInputViewRenders(): void {
-        if (!elgg_view_exists('input/geo/location')) {
+        if (!\elgg_view_exists('input/geo/location')) {
             $this->markTestSkipped('input/geo/location view not registered — plugin may not be active in test DB');
             return;
         }
-        $output = elgg_view('input/geo/location', ['name' => 'location']);
+        $output = \elgg_view('input/geo/location', ['name' => 'location']);
         $this->assertIsString($output);
     }
 
     public function testCountryInputViewRenders(): void {
-        if (!elgg_view_exists('input/geo/country')) {
+        if (!\elgg_view_exists('input/geo/country')) {
             $this->markTestSkipped('input/geo/country view not registered');
             return;
         }
-        $output = elgg_view('input/geo/country', ['name' => 'country']);
+        $output = \elgg_view('input/geo/country', ['name' => 'country']);
         $this->assertIsString($output);
         $this->assertNotEmpty($output);
     }
 
     public function testCountryOutputViewRenders(): void {
-        if (!elgg_view_exists('output/geo/country')) {
+        if (!\elgg_view_exists('output/geo/country')) {
             $this->markTestSkipped('output/geo/country view not registered');
             return;
         }
-        $output = elgg_view('output/geo/country', ['value' => 'US']);
+        $output = \elgg_view('output/geo/country', ['value' => 'US']);
         $this->assertIsString($output);
     }
 
     public function testLocationOutputViewRenders(): void {
-        if (!elgg_view_exists('output/geo/location')) {
+        if (!\elgg_view_exists('output/geo/location')) {
             $this->markTestSkipped('output/geo/location view not registered');
             return;
         }
-        $output = elgg_view('output/geo/location', ['value' => 'London, UK']);
+        $output = \elgg_view('output/geo/location', ['value' => 'London, UK']);
         $this->assertIsString($output);
     }
 
     public function testPostalAddressFormRenders(): void {
-        if (!elgg_view_exists('forms/geo/postal_address')) {
+        if (!\elgg_view_exists('forms/geo/postal_address')) {
             $this->markTestSkipped('forms/geo/postal_address view not registered');
             return;
         }
-        $output = elgg_view('forms/geo/postal_address', [
+        $output = \elgg_view('forms/geo/postal_address', [
             'prefix' => 'address',
             'value'  => [
                 'street_address'   => '10 Downing St',
@@ -71,16 +71,16 @@ class ViewsTest extends IntegrationTestCase {
     }
 
     public function testSettingsViewRenders(): void {
-        if (!elgg_view_exists('plugins/hypeGeo/settings')) {
+        if (!\elgg_view_exists('plugins/hypeGeo/settings')) {
             $this->markTestSkipped('plugins/hypeGeo/settings view not registered');
             return;
         }
-        $plugin = elgg_get_plugin_from_id('hypegeo');
+        $plugin = \elgg_get_plugin_from_id('hypegeo');
         if (!$plugin) {
             $this->markTestSkipped('hypegeo plugin entity not in test DB');
             return;
         }
-        $output = elgg_view('plugins/hypeGeo/settings', ['entity' => $plugin]);
+        $output = \elgg_view('plugins/hypeGeo/settings', ['entity' => $plugin]);
         $this->assertIsString($output);
     }
 }
