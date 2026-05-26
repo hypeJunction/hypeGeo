@@ -104,7 +104,7 @@ function unset_entity_coordinates($entity_guid = 0, $lat = 0, $long = 0) {
 		return false;
 	}
 
-	elgg_delete_metadata(array(
+	\elgg_delete_metadata(array(
 		'guids' => $entity->guid,
 		'metadata_names' => array('geo:lat', 'geo:long'),
 		'limit' => 0
@@ -124,7 +124,7 @@ function search_locations($term, $options = array()) {
 	$options['group_by'] = "v.string";
 	$options['wheres'] = array("v.string LIKE '%" . addcslashes($q, "'\\") . "%'");
 
-	return elgg_get_metadata($options);
+	return \elgg_get_metadata($options);
 }
 
 function get_geopositioning() {
@@ -142,8 +142,8 @@ function get_geopositioning() {
 			'latitude' => $data->getLatitude(),
 			'longitude' => $data->getLongitude()
 		);
-	} else if (elgg_is_logged_in()) {
-		$user = elgg_get_logged_in_user_entity();
+	} else if (\elgg_is_logged_in()) {
+		$user = \elgg_get_logged_in_user_entity();
 		return array(
 			'location' => $user->location,
 			'latitude' => $user->getLatitude(),
@@ -164,10 +164,10 @@ function set_geopositioning($location = '', $latitude = 0, $longitude = 0) {
 	$long = (float) $longitude;
 
 	if (!$lat && !$long) {
-		$latlong = elgg_geocode_location($location);
+		$latlong = \elgg_geocode_location($location);
 		if ($latlong) {
-			$latitude = elgg_extract('lat', $latlong);
-			$longitude = elgg_extract('long', $latlong);
+			$latitude = \elgg_extract('lat', $latlong);
+			$longitude = \elgg_extract('long', $latlong);
 		}
 	}
 

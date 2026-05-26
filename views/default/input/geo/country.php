@@ -16,4 +16,4 @@ if (isset($vars['class'])) {
 	$vars['class'] = 'geo-input-country';
 }
 
-echo elgg_view('input/dropdown', $vars);
+echo \elgg_view('input/dropdown', $vars);

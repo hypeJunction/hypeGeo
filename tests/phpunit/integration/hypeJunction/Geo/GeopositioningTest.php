@@ -41,7 +41,7 @@ class GeopositioningTest extends IntegrationTestCase {
         $_SERVER['REMOTE_ADDR'] = '';
 
         // Log out
-        elgg_get_session()->removeLoggedInUser();
+        \elgg_get_session()->removeLoggedInUser();
 
         $result = get_geopositioning();
         $this->assertIsArray($result);

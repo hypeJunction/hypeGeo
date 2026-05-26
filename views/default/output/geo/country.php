@@ -11,7 +11,7 @@ namespace hypeJunction\Geo;
 $countriesByIso = Countries::getCountries('iso', 'name');
 $countriesByName = Countries::getCountries('name', 'iso');
 
-$value = elgg_extract('value', $vars);
+$value = \elgg_extract('value', $vars);
 if (!$value) {
 	return;
 }
@@ -21,7 +21,7 @@ if (array_key_exists(strtoupper($value), $countriesByIso)) {
 	$value_lower = strtolower($value);
 	echo '<div>';
 	echo '<span>' . $countriesByIso[$value] . '</span>';
-	echo elgg_view_icon("flag-$value_lower");
+	echo \elgg_view_icon("flag-$value_lower");
 	echo '</div>';
 } else
 if (array_key_exists($value, $countriesByName)) {
@@ -29,7 +29,7 @@ if (array_key_exists($value, $countriesByName)) {
 	$code_lower = strtolower($code);
 	echo '<div>';
 	echo '<span>' . $value . '</span>';
-	echo elgg_view_icon("flag-$code_lower");
+	echo \elgg_view_icon("flag-$code_lower");
 	echo '</div>';
 } else {
 	echo $value;
