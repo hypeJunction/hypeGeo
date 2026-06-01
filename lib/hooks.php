@@ -23,7 +23,7 @@ function geocode_location_metadata(\Elgg\Event $event): void {
 
 		case 'create':
 		case 'update':
-			$coordinates = \elgg_geocode_location($metadata->value);
+			$coordinates = elgg_trigger_plugin_hook('geocode', 'location', ['location' => $metadata->value], false);
 			if ($coordinates) {
 				set_entity_coordinates($metadata->entity_guid, $coordinates['lat'], $coordinates['long']);
 			} else {
@@ -50,7 +50,7 @@ function search_custom_types(\Elgg\Hook $hook) {
 function search_by_proximity_hook(\Elgg\Hook $hook) {
 
 	$query = $hook->getParam('query');
-	$coords = \elgg_geocode_location($query);
+	$coords = elgg_trigger_plugin_hook('geocode', 'location', ['location' => $query], false);
 	if (!$coords) {
 		return $hook->getValue();
 	}
