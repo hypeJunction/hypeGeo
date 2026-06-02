@@ -14,27 +14,44 @@ use Elgg\Upgrade\Result;
  */
 class CreateEntityGeometryTable implements AsynchronousUpgrade
 {
-	public function getVersion(): int
+	/**
+     * @return int
+     */
+    public function getVersion(): int
 	{
 		return 2026041200;
 	}
 
-	public function needsIncrementOffset(): bool
+	/**
+     * @return bool
+     */
+    public function needsIncrementOffset(): bool
 	{
 		return false;
 	}
 
-	public function shouldBeSkipped(): bool
+	/**
+     * @return bool
+     */
+    public function shouldBeSkipped(): bool
 	{
 		return $this->tableExists();
 	}
 
-	public function countItems(): int
+	/**
+     * @return int
+     */
+    public function countItems(): int
 	{
 		return $this->tableExists() ? 0 : 1;
 	}
 
-	public function run(Result $result, $offset): Result
+	/**
+     * @param Result $result
+     * @param mixed $offset
+     * @return Result
+     */
+    public function run(Result $result, $offset): Result
 	{
 		$db = elgg()->db;
 		$prefix = $db->prefix;
@@ -59,7 +76,10 @@ class CreateEntityGeometryTable implements AsynchronousUpgrade
 		return $result;
 	}
 
-	private function tableExists(): bool
+	/**
+     * @return bool
+     */
+    private function tableExists(): bool
 	{
 		try {
 			$db = elgg()->db;

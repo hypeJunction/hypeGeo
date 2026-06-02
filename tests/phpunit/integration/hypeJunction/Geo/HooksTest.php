@@ -16,10 +16,16 @@ class HooksTest extends IntegrationTestCase {
     public function up() {}
     public function down() {}
 
+    /**
+     * @return string
+     */
     public function getPluginID(): string {
         return '';
     }
 
+    /**
+     * @return void
+     */
     public function testGeocodeLocationHookHandlerIsCallable(): void {
         $this->assertTrue(
             function_exists('hypeJunction\\Geo\\geocode_location'),
@@ -27,11 +33,17 @@ class HooksTest extends IntegrationTestCase {
         );
     }
 
+    /**
+     * @return void
+     */
     public function testGeocodeLocationReturnsFalseForEmptyLocation(): void {
         $result = geocode_location('geocode', 'location', null, ['location' => '']);
         $this->assertFalse($result);
     }
 
+    /**
+     * @return void
+     */
     public function testSearchCustomTypesIncludesProximityWhenEnabled(): void {
         $plugin = \elgg_get_plugin_from_id('hypegeo');
         if (!$plugin) {
@@ -48,6 +60,9 @@ class HooksTest extends IntegrationTestCase {
         $this->assertNotContains('proximity', $result);
     }
 
+    /**
+     * @return void
+     */
     public function testGeocodeLocationMetadataIgnoresUnrelatedMetadata(): void {
         $md = (object) [
             'name'         => 'some_other_field',

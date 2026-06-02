@@ -8,6 +8,13 @@ use Treffynnon\Navigator\Distance;
 use Treffynnon\Navigator\Distance\Calculator\GreatCircle;
 use Treffynnon\Navigator\LatLong;
 
+/**
+ * @param mixed $options
+ * @param mixed $lat
+ * @param mixed $long
+ * @param mixed $getter
+ * @return mixed
+ */
 function get_entities_by_proximity($options = array(), $lat = null, $long = null, $getter = 'elgg_get_entities') {
 
 	if (is_null($lat) || is_null($long)) {
@@ -28,6 +35,12 @@ function get_entities_by_proximity($options = array(), $lat = null, $long = null
 	return $getter($options);
 }
 
+/**
+ * @param mixed $options
+ * @param mixed $lat
+ * @param mixed $long
+ * @return mixed
+ */
 function add_order_by_proximity_clauses($options = array(), $lat = 0, $long = 0) {
 
 	if (!is_array($options)) {
@@ -46,6 +59,14 @@ function add_order_by_proximity_clauses($options = array(), $lat = 0, $long = 0)
 	return $options;
 }
 
+/**
+ * @param mixed $options
+ * @param mixed $lat
+ * @param mixed $long
+ * @param mixed $radius
+ * @param mixed $ratio
+ * @return mixed
+ */
 function add_distance_constraint_clauses($options = array(), $lat = 0, $long = 0, $radius = 50000, $ratio = 1) {
 
 	if (!is_array($options)) {
@@ -64,6 +85,14 @@ function add_distance_constraint_clauses($options = array(), $lat = 0, $long = 0
 	return $options;
 }
 
+/**
+ * @param mixed $lat1
+ * @param mixed $long1
+ * @param mixed $lat2
+ * @param mixed $long2
+ * @param mixed $unit
+ * @return mixed
+ */
 function get_distance($lat1, $long1, $lat2, $long2, $unit = 'metres') {
 	$point1 = new LatLong(new Coordinate($lat1), new Coordinate($long1));
 	$point2 = new LatLong(new Coordinate($lat2), new Coordinate($long2));
@@ -71,6 +100,12 @@ function get_distance($lat1, $long1, $lat2, $long2, $unit = 'metres') {
 	return $distance->get(new GreatCircle());
 }
 
+/**
+ * @param mixed $entity_guid
+ * @param mixed $lat
+ * @param mixed $long
+ * @return mixed
+ */
 function set_entity_coordinates($entity_guid = 0, $lat = 0, $long = 0) {
 
 	$lat = (float) $lat;
@@ -96,6 +131,12 @@ function set_entity_coordinates($entity_guid = 0, $lat = 0, $long = 0) {
 	return $db->insertData($query);
 }
 
+/**
+ * @param mixed $entity_guid
+ * @param mixed $lat
+ * @param mixed $long
+ * @return mixed
+ */
 function unset_entity_coordinates($entity_guid = 0, $lat = 0, $long = 0) {
 
 	$entity = get_entity($entity_guid);
@@ -116,6 +157,11 @@ function unset_entity_coordinates($entity_guid = 0, $lat = 0, $long = 0) {
 	return $db->deleteData($query);
 }
 
+/**
+ * @param mixed $term
+ * @param mixed $options
+ * @return mixed
+ */
 function search_locations($term, $options = array()) {
 
 	$q = str_replace(array('_', '%'), array('\_', '\%'), $term);
@@ -127,6 +173,9 @@ function search_locations($term, $options = array()) {
 	return \elgg_get_metadata($options);
 }
 
+/**
+ * @return mixed
+ */
 function get_geopositioning() {
 
 	if (isset($_SESSION['geopositioning'])) {
@@ -158,13 +207,18 @@ function get_geopositioning() {
 	}
 }
 
+/**
+ * @param mixed $location
+ * @param mixed $latitude
+ * @param mixed $longitude
+ */
 function set_geopositioning($location = '', $latitude = 0, $longitude = 0) {
 
 	$lat = (float) $latitude;
 	$long = (float) $longitude;
 
 	if (!$lat && !$long) {
-		$latlong = elgg_trigger_plugin_hook('geocode', 'location', ['location' => $location], false);
+		$latlong = \elgg_trigger_plugin_hook('geocode', 'location', ['location' => $location], false);
 		if ($latlong) {
 			$latitude = \elgg_extract('lat', $latlong);
 			$longitude = \elgg_extract('long', $latlong);

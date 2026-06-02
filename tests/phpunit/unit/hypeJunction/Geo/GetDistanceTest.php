@@ -14,18 +14,27 @@ class GetDistanceTest extends UnitTestCase {
     public function up() {}
     public function down() {}
 
+    /**
+     * @return void
+     */
     protected function skipIfNavigatorMissing(): void {
         if (!class_exists(\Treffynnon\Navigator\LatLong::class)) {
             $this->markTestSkipped('treffynnon/navigator not installed (see bead 3t4t)');
         }
     }
 
+    /**
+     * @return void
+     */
     public function testDistanceBetweenIdenticalPointsIsZero(): void {
         $this->skipIfNavigatorMissing();
         $d = get_distance(51.5, -0.12, 51.5, -0.12);
         $this->assertEqualsWithDelta(0.0, (float) $d, 0.001);
     }
 
+    /**
+     * @return void
+     */
     public function testDistanceBetweenLondonAndParisRoughly344km(): void {
         $this->skipIfNavigatorMissing();
         // London ~51.5074,-0.1278  Paris ~48.8566,2.3522

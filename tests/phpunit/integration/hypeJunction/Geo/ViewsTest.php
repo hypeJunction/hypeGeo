@@ -9,10 +9,16 @@ class ViewsTest extends IntegrationTestCase {
     public function up() {}
     public function down() {}
 
+    /**
+     * @return string
+     */
     public function getPluginID(): string {
         return '';
     }
 
+    /**
+     * @return void
+     */
     public function testLocationInputViewRenders(): void {
         if (!\elgg_view_exists('input/geo/location')) {
             $this->markTestSkipped('input/geo/location view not registered — plugin may not be active in test DB');
@@ -22,6 +28,9 @@ class ViewsTest extends IntegrationTestCase {
         $this->assertIsString($output);
     }
 
+    /**
+     * @return void
+     */
     public function testCountryInputViewRenders(): void {
         if (!\elgg_view_exists('input/geo/country')) {
             $this->markTestSkipped('input/geo/country view not registered');
@@ -32,6 +41,9 @@ class ViewsTest extends IntegrationTestCase {
         $this->assertNotEmpty($output);
     }
 
+    /**
+     * @return void
+     */
     public function testCountryOutputViewRenders(): void {
         if (!\elgg_view_exists('output/geo/country')) {
             $this->markTestSkipped('output/geo/country view not registered');
@@ -41,6 +53,9 @@ class ViewsTest extends IntegrationTestCase {
         $this->assertIsString($output);
     }
 
+    /**
+     * @return void
+     */
     public function testLocationOutputViewRenders(): void {
         if (!\elgg_view_exists('output/geo/location')) {
             $this->markTestSkipped('output/geo/location view not registered');
@@ -50,6 +65,9 @@ class ViewsTest extends IntegrationTestCase {
         $this->assertIsString($output);
     }
 
+    /**
+     * @return void
+     */
     public function testPostalAddressFormRenders(): void {
         if (!\elgg_view_exists('forms/geo/postal_address')) {
             $this->markTestSkipped('forms/geo/postal_address view not registered');
@@ -70,6 +88,9 @@ class ViewsTest extends IntegrationTestCase {
         $this->assertStringContainsString('address[', $output);
     }
 
+    /**
+     * @return void
+     */
     public function testSettingsViewRenders(): void {
         if (!\elgg_view_exists('plugins/hypeGeo/settings')) {
             $this->markTestSkipped('plugins/hypeGeo/settings view not registered');

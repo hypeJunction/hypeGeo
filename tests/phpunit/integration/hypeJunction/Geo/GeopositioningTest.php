@@ -11,10 +11,16 @@ class GeopositioningTest extends IntegrationTestCase {
         unset($_SESSION['geopositioning']);
     }
 
+    /**
+     * @return string
+     */
     public function getPluginID(): string {
         return '';
     }
 
+    /**
+     * @return void
+     */
     public function testSetGeopositioningStoresInSession(): void {
         set_geopositioning('London, UK', 51.5074, -0.1278);
         $this->assertArrayHasKey('geopositioning', $_SESSION);
@@ -23,6 +29,9 @@ class GeopositioningTest extends IntegrationTestCase {
         $this->assertEquals(-0.1278, $_SESSION['geopositioning']['longitude']);
     }
 
+    /**
+     * @return void
+     */
     public function testGetGeopositioningReturnsSessionValue(): void {
         $_SESSION['geopositioning'] = [
             'location' => 'Paris, FR',
@@ -35,6 +44,9 @@ class GeopositioningTest extends IntegrationTestCase {
         $this->assertEquals(2.3522, $result['longitude']);
     }
 
+    /**
+     * @return void
+     */
     public function testGetGeopositioningForAnonymousReturnsEmptyDefaults(): void {
         unset($_SESSION['geopositioning']);
         $remote = $_SERVER['REMOTE_ADDR'] ?? null;

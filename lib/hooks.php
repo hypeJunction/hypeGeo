@@ -2,12 +2,20 @@
 
 namespace hypeJunction\Geo;
 
+/**
+ * @param Elgg\Hook $hook
+ * @return mixed
+ */
 function geocode_location(\Elgg\Hook $hook) {
 
 	$location = $hook->getParam('location', false);
 	return ElggGeocoder::geocodeAddress($location);
 }
 
+/**
+ * @param Elgg\Event $event
+ * @return void
+ */
 function geocode_location_metadata(\Elgg\Event $event): void {
 
 	$metadata = $event->getObject();
@@ -23,7 +31,7 @@ function geocode_location_metadata(\Elgg\Event $event): void {
 
 		case 'create':
 		case 'update':
-			$coordinates = elgg_trigger_plugin_hook('geocode', 'location', ['location' => $metadata->value], false);
+			$coordinates = \elgg_trigger_plugin_hook('geocode', 'location', ['location' => $metadata->value], false);
 			if ($coordinates) {
 				set_entity_coordinates($metadata->entity_guid, $coordinates['lat'], $coordinates['long']);
 			} else {
@@ -37,6 +45,10 @@ function geocode_location_metadata(\Elgg\Event $event): void {
 	}
 }
 
+/**
+ * @param Elgg\Hook $hook
+ * @return mixed
+ */
 function search_custom_types(\Elgg\Hook $hook) {
 		$return = $hook->getValue();
 
@@ -47,10 +59,14 @@ function search_custom_types(\Elgg\Hook $hook) {
 	return $return;
 }
 
+/**
+ * @param Elgg\Hook $hook
+ * @return mixed
+ */
 function search_by_proximity_hook(\Elgg\Hook $hook) {
 
 	$query = $hook->getParam('query');
-	$coords = elgg_trigger_plugin_hook('geocode', 'location', ['location' => $query], false);
+	$coords = \elgg_trigger_plugin_hook('geocode', 'location', ['location' => $query], false);
 	if (!$coords) {
 		return $hook->getValue();
 	}

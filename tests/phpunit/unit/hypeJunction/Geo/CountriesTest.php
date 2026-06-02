@@ -9,12 +9,18 @@ class CountriesTest extends UnitTestCase {
     public function up() {}
     public function down() {}
 
+    /**
+     * @return void
+     */
     public function testGetCountriesReturnsArray(): void {
         $countries = Countries::getCountries();
         $this->assertIsArray($countries);
         $this->assertNotEmpty($countries, 'Countries list should not be empty');
     }
 
+    /**
+     * @return void
+     */
     public function testGetCountriesMappedByIsoCode(): void {
         $countries = Countries::getCountries('iso', 'name', 'name');
         $this->assertIsArray($countries);
@@ -24,6 +30,9 @@ class CountriesTest extends UnitTestCase {
         $this->assertIsString($countries['US']);
     }
 
+    /**
+     * @return void
+     */
     public function testGetCountriesSortedAlphabetically(): void {
         $countries = Countries::getCountries('iso', 'name', 'name');
         $names = array_values($countries);
@@ -34,6 +43,9 @@ class CountriesTest extends UnitTestCase {
         $this->assertNotEmpty($names);
     }
 
+    /**
+     * @return void
+     */
     public function testGetCountriesWithMultipleMapValueKeysReturnsNestedArray(): void {
         $countries = Countries::getCountries('iso', ['name', 'iso']);
         $this->assertIsArray($countries);

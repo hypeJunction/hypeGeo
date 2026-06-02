@@ -17,6 +17,9 @@ class DistanceHelpersTest extends UnitTestCase {
     public function up() {}
     public function down() {}
 
+    /**
+     * @return void
+     */
     public function testAddOrderByProximityAddsSelectsJoinsAndOrderBy(): void {
         $options = add_order_by_proximity_clauses([], 51.5, -0.12);
 
@@ -35,6 +38,9 @@ class DistanceHelpersTest extends UnitTestCase {
         $this->assertStringContainsString('proximity ASC', $options['order_by']);
     }
 
+    /**
+     * @return void
+     */
     public function testAddOrderByProximityPreservesExistingOptions(): void {
         $input = [
             'types'   => ['object'],
@@ -48,12 +54,18 @@ class DistanceHelpersTest extends UnitTestCase {
         $this->assertCount(2, $options['joins']);
     }
 
+    /**
+     * @return void
+     */
     public function testAddOrderByProximityAcceptsNonArray(): void {
         $options = add_order_by_proximity_clauses('not-an-array', 1, 2);
         $this->assertIsArray($options);
         $this->assertArrayHasKey('selects', $options);
     }
 
+    /**
+     * @return void
+     */
     public function testAddDistanceConstraintAddsWhereAndJoin(): void {
         $options = add_distance_constraint_clauses([], 51.5, -0.12, 10000);
 
@@ -63,6 +75,9 @@ class DistanceHelpersTest extends UnitTestCase {
         $this->assertStringContainsString('10000', $options['wheres'][0]);
     }
 
+    /**
+     * @return void
+     */
     public function testAddDistanceConstraintCastsNumerics(): void {
         // Inject string inputs — helper should cast and NOT produce SQL with
         // raw unescaped strings.

@@ -13,10 +13,16 @@ class PluginActivationTest extends IntegrationTestCase {
     public function up() {}
     public function down() {}
 
+    /**
+     * @return string
+     */
     public function getPluginID(): string {
         return '';
     }
 
+    /**
+     * @return void
+     */
     public function testPluginRegistered(): void {
         $plugin = \elgg_get_plugin_from_id('hypegeo');
         if (!$plugin) {
@@ -26,6 +32,9 @@ class PluginActivationTest extends IntegrationTestCase {
         $this->assertEquals('hypegeo', $plugin->getID());
     }
 
+    /**
+     * @return void
+     */
     public function testActivateSqlFileExists(): void {
         $sql = dirname(__DIR__, 5) . '/sql/create_table.sql';
         $this->assertFileExists($sql);
@@ -33,6 +42,9 @@ class PluginActivationTest extends IntegrationTestCase {
         $this->assertStringContainsString('entity_geometry', $contents);
     }
 
+    /**
+     * @return void
+     */
     public function testRequiredConstantsDefined(): void {
         $this->assertTrue(defined('hypeJunction\\Geo\\PLUGIN_ID'));
         $this->assertTrue(defined('hypeJunction\\Geo\\SEARCH_RADIUS'));

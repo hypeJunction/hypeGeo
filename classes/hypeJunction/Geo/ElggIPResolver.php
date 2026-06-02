@@ -10,9 +10,12 @@ use Geocoder\Provider\FreeGeoIpProvider;
 
 class ElggIPResolver {
 
-	private static $adapter;
-	private static $providers;
-	private static $geocoder;
+	/** @var mixed */
+    private static $adapter;
+	/** @var mixed */
+    private static $providers;
+	/** @var mixed */
+    private static $geocoder;
 
 	/**
 	 * Constructs a geocoder and builds providers from plugin settings
@@ -77,7 +80,10 @@ class ElggIPResolver {
 		}
 	}
 
-	private function buildFreeGeoIpProvider() {
+	/**
+     * @return mixed
+     */
+    private function buildFreeGeoIpProvider() {
 		$provider = 'FreeGeoIpProvider';
 		if (!\elgg_get_plugin_setting($provider, PLUGIN_ID)) {
 			return null;

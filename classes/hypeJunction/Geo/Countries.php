@@ -550,7 +550,10 @@ class Countries {
 		add_translation('en', $english);
 	}
 
-	protected static function getRawCountryList() {
+	/**
+     * @return mixed
+     */
+    protected static function getRawCountryList() {
 
 		/**
 		 * @copyright http://download.geonames.org/export/dump/countryInfo.txt

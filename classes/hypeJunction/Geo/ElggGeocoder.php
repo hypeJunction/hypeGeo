@@ -14,9 +14,12 @@ use Geocoder\Provider\YandexProvider;
 
 class ElggGeocoder {
 
-	private static $adapter;
-	private static $providers;
-	private static $geocoder;
+	/** @var mixed */
+    private static $adapter;
+	/** @var mixed */
+    private static $providers;
+	/** @var mixed */
+    private static $geocoder;
 
 	/**
 	 * Constructs a geocoder and builds providers from plugin settings
@@ -162,7 +165,10 @@ class ElggGeocoder {
 		}
 	}
 
-	private function buildGoogleMapsProvider() {
+	/**
+     * @return mixed
+     */
+    private function buildGoogleMapsProvider() {
 
 		$provider = 'GoogleMapsProvider';
 		if (!\elgg_get_plugin_setting($provider, PLUGIN_ID)) {
@@ -183,7 +189,10 @@ class ElggGeocoder {
 		);
 	}
 
-	private function buildNominatimProvider() {
+	/**
+     * @return mixed
+     */
+    private function buildNominatimProvider() {
 
 		$provider = 'NominatimProvider';
 		if (!\elgg_get_plugin_setting($provider, PLUGIN_ID)) {
@@ -198,7 +207,10 @@ class ElggGeocoder {
 		);
 	}
 
-	private function buildYandexProvider() {
+	/**
+     * @return mixed
+     */
+    private function buildYandexProvider() {
 
 		$provider = 'YandexProvider';
 		if (!\elgg_get_plugin_setting($provider, PLUGIN_ID)) {
@@ -211,7 +223,10 @@ class ElggGeocoder {
 		return new YandexProvider($adapter, $locale, $toponym);
 	}
 
-	private function buildGoogleMapsBusinessProvider() {
+	/**
+     * @return mixed
+     */
+    private function buildGoogleMapsBusinessProvider() {
 
 		$provider = 'GoogleMapsBusinessProvider';
 		if (!\elgg_get_plugin_setting($provider, PLUGIN_ID)) {
@@ -228,7 +243,10 @@ class ElggGeocoder {
 		return new GoogleMapsBusinessProvider($adapter, $client_id, $private_key, $locale, $region, $useSsl);
 	}
 
-	private function buildFreeGeoIpProvider() {
+	/**
+     * @return mixed
+     */
+    private function buildFreeGeoIpProvider() {
 		$provider = 'FreeGeoIpProvider';
 		if (!\elgg_get_plugin_setting($provider, PLUGIN_ID)) {
 			return null;

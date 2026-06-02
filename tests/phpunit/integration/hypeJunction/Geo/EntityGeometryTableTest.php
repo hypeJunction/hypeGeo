@@ -17,10 +17,16 @@ class EntityGeometryTableTest extends IntegrationTestCase {
     public function up() {}
     public function down() {}
 
+    /**
+     * @return string
+     */
     public function getPluginID(): string {
         return '';
     }
 
+    /**
+     * @return void
+     */
     public function testEntityGeometryTableExists(): void {
         $db = elgg()->db;
         $prefix = $db->prefix;
@@ -28,11 +34,17 @@ class EntityGeometryTableTest extends IntegrationTestCase {
         $this->assertNotEmpty($rows, 'entity_geometry table should exist (created by activate.php)');
     }
 
+    /**
+     * @return void
+     */
     public function testSetEntityCoordinatesRequiresValidEntity(): void {
         $result = set_entity_coordinates(0, 51.5, -0.12);
         $this->assertFalse($result);
     }
 
+    /**
+     * @return void
+     */
     public function testSetEntityCoordinatesRejectsZeroCoords(): void {
         $user = $this->createUser();
         $object = $this->createObject(['subtype' => 'hypegeo_test']);
@@ -40,6 +52,9 @@ class EntityGeometryTableTest extends IntegrationTestCase {
         $this->assertFalse($result);
     }
 
+    /**
+     * @return void
+     */
     public function testSetAndUnsetEntityCoordinatesRoundTrip(): void {
         $user = $this->createUser();
         $object = $this->createObject(['subtype' => 'hypegeo_test', 'owner_guid' => $user->guid]);
