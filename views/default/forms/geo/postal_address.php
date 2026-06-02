@@ -13,12 +13,12 @@ $prefix = \elgg_extract('prefix', $vars, 'address');
 $required = \elgg_extract('required', $vars, false);
 $value = \elgg_extract('value', $vars);
 
-$label_attrs = '';
+$label_attrs = [];
 if ($required) {
-	$label_attrs = \elgg_format_attributes([
+	$label_attrs = [
 		'title' => \elgg_echo('geo:required'),
 		'class' => 'geo-required',
-	]);
+	];
 }
 
 $street_address = \elgg_view('input/text', [
@@ -69,27 +69,27 @@ $country = \elgg_view('input/geo/country', [
 
 <fieldset class="geo-postal-address" data-postal-address>
 	<div data-street-address>
-		<label <?php echo $label_attrs ?>><?php echo \elgg_echo('geo:postal_address:street_address') ?></label>
+		<?php echo \elgg_format_element('label', $label_attrs, \elgg_echo('geo:postal_address:street_address')) ?>
 		<?php echo $street_address ?>
 	</div>
 	<div data-extended-address>
-		<label><?php echo \elgg_echo('geo:postal_address:extended_address') ?></label>
+		<?php echo \elgg_format_element('label', [], \elgg_echo('geo:postal_address:extended_address')) ?>
 		<?php echo $extended_address ?>
 	</div>
 	<div data-locality>
-		<label <?php echo $label_attrs ?>><?php echo \elgg_echo('geo:postal_address:locality') ?></label>
+		<?php echo \elgg_format_element('label', $label_attrs, \elgg_echo('geo:postal_address:locality')) ?>
 		<?php echo $locality ?>
 	</div>
 	<div data-region>
-		<label <?php echo $label_attrs ?>><?php echo \elgg_echo('geo:postal_address:region') ?></label>
+		<?php echo \elgg_format_element('label', $label_attrs, \elgg_echo('geo:postal_address:region')) ?>
 		<?php echo $region ?>
 	</div>
 	<div data-postal-code>
-		<label <?php echo $label_attrs ?>><?php echo \elgg_echo('geo:postal_address:postal_code') ?></label>
+		<?php echo \elgg_format_element('label', $label_attrs, \elgg_echo('geo:postal_address:postal_code')) ?>
 		<?php echo $postal_code ?>
 	</div>
 	<div data-country>
-		<label <?php echo $label_attrs ?>><?php echo \elgg_echo('geo:postal_address:country') ?></label>
+		<?php echo \elgg_format_element('label', $label_attrs, \elgg_echo('geo:postal_address:country')) ?>
 		<?php echo $country ?>
 	</div>
 </fieldset>
