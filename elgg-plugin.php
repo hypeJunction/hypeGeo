@@ -1,5 +1,11 @@
 <?php
 
+// Git-tracked procedural libraries must be loaded before the handlers
+// referenced below are resolved. composer autoload.files is insufficient
+// for git-tracked customs, so require them here at the top of elgg-plugin.php.
+require_once __DIR__ . '/lib/functions.php';
+require_once __DIR__ . '/lib/hooks.php';
+
 return [
 	'plugin' => [
 		'name' => 'hypeGeo',
