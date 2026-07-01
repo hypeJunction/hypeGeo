@@ -34,9 +34,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		if (!defined('HYPEGEO_METRIC_SYSTEM')) {
 			define('HYPEGEO_METRIC_SYSTEM', 'SI');
 		}
-
-		require_once $root . 'lib/functions.php';
-		require_once $root . 'lib/hooks.php';
 	}
 
 	/**

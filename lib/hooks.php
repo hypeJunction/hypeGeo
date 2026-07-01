@@ -34,7 +34,8 @@ function geocode_location_metadata(\Elgg\Event $event): void {
 	switch ($event->getName()) {
 		case 'create':
 		case 'update':
-			$coordinates = elgg_geocode_location($metadata->value);
+			// TODO(7.x): elgg_geocode_location() removed, no core replacement — hypeGeo geocoding
+			$coordinates = null; // TODO(7.x): elgg_geocode_location removed — integrate a geocoding provider (hypeGeo)
 			if ($coordinates) {
 				set_entity_coordinates($metadata->entity_guid, $coordinates['lat'], $coordinates['long']);
 			} else {
@@ -74,7 +75,8 @@ function search_by_proximity_hook(\Elgg\Event $event): mixed {
 
 	$return = $event->getValue();
 	$query = $event->getParam('query');
-	$coords = elgg_geocode_location($query);
+	// TODO(7.x): elgg_geocode_location() removed, no core replacement — hypeGeo geocoding
+	$coords = null; // TODO(7.x): elgg_geocode_location removed — integrate a geocoding provider (hypeGeo)
 	if (!$coords) {
 		return $return;
 	}

@@ -237,7 +237,8 @@ function set_geopositioning($location = '', $latitude = 0, $longitude = 0) {
 	$long = (float) $longitude;
 
 	if (!$lat && !$long) {
-		$latlong = elgg_geocode_location($location);
+		// TODO(7.x): elgg_geocode_location() removed, no core replacement — hypeGeo geocoding
+		$latlong = null; // TODO(7.x): elgg_geocode_location removed — integrate a geocoding provider (hypeGeo)
 		if ($latlong) {
 			$latitude = elgg_extract('lat', $latlong);
 			$longitude = elgg_extract('long', $latlong);

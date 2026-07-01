@@ -15,7 +15,7 @@ $value = elgg_extract('value', $vars);
 
 $label_attrs = '';
 if ($required) {
-	$label_attrs = elgg_format_attributes([
+	$label_attrs = _elgg_services()->html_formatter->formatAttributes([
 		'title' => elgg_echo('geo:required'),
 		'class' => 'geo-required',
 	]);
