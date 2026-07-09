@@ -56,7 +56,7 @@ function add_order_by_proximity_clauses($options = [], $lat = 0, $long = 0) {
 
 	$prefix = elgg()->db->prefix;
 
-	$options['selects'][] = "ST_Distance(eg.geometry, ST_ST_GeomFromText('POINT({$lat} {$long})')) as proximity";
+	$options['selects'][] = "ST_Distance(eg.geometry, ST_GeomFromText('POINT({$lat} {$long})')) as proximity";
 	$options['joins'][] = "JOIN {$prefix}entity_geometry eg ON e.guid = eg.entity_guid";
 	$options['order_by'] = 'proximity ASC, e.time_updated DESC';
 
@@ -86,7 +86,7 @@ function add_distance_constraint_clauses($options = [], $lat = 0, $long = 0, $ra
 
 	$prefix = elgg()->db->prefix;
 
-	$options['wheres'][] = "(ST_Distance(eg.geometry, ST_ST_GeomFromText('POINT({$lat} {$long})')) * 60 * 1825 * {$ratio} <= {$radius})";
+	$options['wheres'][] = "(ST_Distance(eg.geometry, ST_GeomFromText('POINT({$lat} {$long})')) * 60 * 1825 * {$ratio} <= {$radius})";
 	$options['joins'][] = "JOIN {$prefix}entity_geometry eg ON e.guid = eg.entity_guid";
 	return $options;
 }
